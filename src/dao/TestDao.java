@@ -10,5 +10,6 @@ package dao;
  * @author liana
  */
 public class TestDao {
-    private int=10;
+    private int a = 10;
 }
+
