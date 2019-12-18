@@ -5,6 +5,7 @@
  */
 package dao;
 
+import school.Utils;
 import java.sql.*;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -95,7 +96,7 @@ public class TrainerDao {
             u.setPassword(lastname);
             
             System.out.println("Subject:");
-            String subject = UtilsDao.notNull(sc.nextLine());
+            String subject = Utils.notNull(sc.nextLine());
             t.setSubject(subject);
 
             insertTrainer.setString(1, t.getFirstname());
@@ -141,9 +142,9 @@ public class TrainerDao {
         PreparedStatement pst = null;
         try {
             System.out.println("First name:");
-            firstname = UtilsDao.notNull(sc.nextLine());
+            firstname = Utils.notNull(sc.nextLine());
             System.out.println("Last name:");
-            lastname = UtilsDao.notNull(sc.nextLine());
+            lastname = Utils.notNull(sc.nextLine());
 
             String sql = "SELECT trainer_id,firstname,lastname from trainer where firstname='" + firstname + "'"
                     + "AND lastname='" + lastname + "'";
@@ -320,7 +321,7 @@ public class TrainerDao {
     public static void updateTrainerFirstName(Trainer trainer) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please type the new first name");
-        firstname = UtilsDao.notNull(sc.nextLine());
+        firstname = Utils.notNull(sc.nextLine());
         Connection con = DBUtils.getConnection();
         PreparedStatement pst = null;
         String sql = "UPDATE trainer SET firstname='" + firstname + "'" + "WHERE trainer_id='" + trainer_id + "'";
@@ -357,7 +358,7 @@ public class TrainerDao {
     public static void updateTrainerLastName(Trainer trainer) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please type the new last name");
-        lastname = UtilsDao.notNull(sc.nextLine());
+        lastname = Utils.notNull(sc.nextLine());
         Connection con = DBUtils.getConnection();
         PreparedStatement pst1 = null;
         PreparedStatement pst2 = null;
@@ -406,7 +407,7 @@ public class TrainerDao {
     public static void updateTrainerSubject(Trainer trainer) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please type the new subject: ");
-        String subject = UtilsDao.notNull(sc.nextLine());
+        String subject = Utils.notNull(sc.nextLine());
         Connection con = DBUtils.getConnection();
         PreparedStatement pst = null;
         String sql = "UPDATE trainer SET subject_='" + subject + "'" + "WHERE trainer_id='" + trainer_id + "'";
@@ -445,13 +446,11 @@ public class TrainerDao {
         checkIfTrainerExists();
         Scanner sc = new Scanner(System.in);
         System.out.println("Please type the trainer_id of the entry you want to update: ");
-
+        checkByIdAndLastname();
         Trainer trainer = new Trainer();
         Connection con = DBUtils.getConnection();
         PreparedStatement pst = null;
         String sql = "select * from trainer where trainer_id=?";
-        trainer_id = UtilsDao.onlyInteger();
-        checkByIdAndLastname();
         try {
             pst = con.prepareStatement(sql);
             pst.setInt(1, trainer_id);
@@ -522,8 +521,7 @@ public class TrainerDao {
         Connection con = DBUtils.getConnection();
         PreparedStatement pst = null;
         try {
-            System.err.println("TRAINER ID is incorrect, please try again: ");
-            trainer_id = UtilsDao.onlyInteger();
+            trainer_id = Utils.onlyInteger();
             String sql = "SELECT trainer_id,lastname from trainer where lastname='" + lastname + "'"
                     + "AND trainer_id='" + trainer_id + "'";
 
@@ -643,9 +641,9 @@ public class TrainerDao {
         Connection con = DBUtils.getConnection();
         Scanner sc = new Scanner(System.in);
         System.out.println("FIRST NAME: ");
-        TrainerDao.firstname = UtilsDao.notNull(sc.nextLine());
+        TrainerDao.firstname = Utils.notNull(sc.nextLine());
         System.out.println("LAST NAME: ");
-        TrainerDao.lastname = UtilsDao.notNull(sc.nextLine());
+        TrainerDao.lastname = Utils.notNull(sc.nextLine());
 
         PreparedStatement pst = null;
         String sql = "SELECT trainer_id,firstname,lastname from trainer where firstname='" + TrainerDao.firstname + "'"

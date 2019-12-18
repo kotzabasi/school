@@ -5,6 +5,7 @@
  */
 package dao;
 
+import school.Utils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -94,7 +95,7 @@ public class TrainerPerCourseDao {
         CourseDao.fetchCourseId(title);
         int course_id = CourseDao.course_id;
         System.out.println("Are  you sure you want to assign " + firstname + " " + lastname + " to " + title + "? Please answer with yes or no");
-        String answer = UtilsDao.answerYesOrNo(sc.nextLine());
+        String answer = Utils.answerYesOrNo(sc.nextLine());
         PreparedStatement pst = null;
         Connection con = DBUtils.getConnection();
         switch (answer) {
@@ -289,7 +290,7 @@ public class TrainerPerCourseDao {
         fetchOralAndTotalMark();
         System.out.println("WOULD YOU LIKE TO SET ORAL MARK OR TOTAL MARK?");
         System.out.println("PLEASE TYPE ORAL OR TOTAL");
-        String answer=UtilsDao.notNull(sc.nextLine().toLowerCase());
+        String answer=Utils.notNull(sc.nextLine().toLowerCase());
         while(!answer.equalsIgnoreCase("total") && !answer.equalsIgnoreCase("oral")){
             System.out.println("Please type ORAL or TOTAL");
             answer=sc.nextLine().toLowerCase();

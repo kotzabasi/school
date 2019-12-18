@@ -5,35 +5,10 @@
  */
 package school;
 
-import at.favre.lib.crypto.bcrypt.BCrypt;
-import com.sun.javafx.font.freetype.HBGlyphLayout;
-import dao.AssignmentDao;
-import static dao.AssignmentDao.title;
-import dao.AssignmentPerStudentDao;
-import dao.CourseDao;
-import dao.ScheduleDao;
+
 import dao.StudentDao;
-import dao.StudentPerCourseDao;
-import dao.UtilsDao;
-import dao.TrainerDao;
-import dao.TrainerPerCourseDao;
-import static dao.UserDao.password;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import menus.Home;
-import model.Assignment;
-import utils.DBUtils;
 
 /**
  *
@@ -66,6 +41,7 @@ public class School {
 
 
 
-Home.userLogin();
+        Home.headmasterMenu();
+                
     }
 }

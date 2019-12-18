@@ -153,7 +153,6 @@ public class Home {
     }
 
     public static void headmasterMenu() throws ParseException {
-        System.err.println(current);
         Scanner sc = new Scanner(System.in);
         System.out.print("MAIN MENU:" + "\n" + "1.Courses" + "\n" + "2.Students" + "\n" + "3.Trainers" + "\n" + "4.Assignments" + "\n"
                 + "5.Students per Course" + "\n" + "6.Trainers per Course" + "\n" + "7.Assignments per Course" + "\n"
@@ -169,7 +168,7 @@ public class Home {
 
                     switch (choiceMenu) {
                         case 1:
-                            System.out.println("COURSE MENU:" + "\n" + "1.Create Course" + "\n" + "2.Update Course" + "\n" + "3.Delete Course" + "\n" + "4. See List of all courses" + "\n"
+                            System.out.println("COURSE MENU:" + "\n" + "1.Create Course" + "\n" + "2.Update Course" + "\n" + "3.Delete Course" + "\n" + "4.See List of all courses" + "\n"
                                     + "5.Return to Main Menu" + "\n" + "PLEASE CHOOSE A NUMBER FROM 1 TO 5: ");
                             int courseChoice = 0;
                             do {
@@ -195,6 +194,7 @@ public class Home {
                                                 break;
                                             case 4:
                                                 CourseDao.getAllCourses();
+                                                System.out.println();
                                             case 5:
                                                 headmasterMenu();
                                                 break;
@@ -208,7 +208,7 @@ public class Home {
                             } while (sc.hasNext());
 
                         case 2:
-                            System.out.println("STUDENT MENU:" + "\n" + "1.Create student" + "\n" + "2.Update Student" + "\n" + "3.Delete Student" + "\n" + "4. See List of ALL students" + "\n"
+                            System.out.println("STUDENT MENU:" + "\n" + "1.Create student" + "\n" + "2.Update Student" + "\n" + "3.Delete Student" + "\n" + "4.See List of ALL students" + "\n"
                                     + "5.Return to Main Menu" + "\n" + "PLEASE CHOOSE A NUMBER FROM 1 TO 5: ");
 
                             int studentChoice = 0;
@@ -292,7 +292,7 @@ public class Home {
                             } while (sc.hasNext());
 
                         case 4:
-                            System.out.println("ASSIGNMENT MENU:" + "\n" + "1.Create Assignment" + "\n" + "2.Update Assignment" + "\n" + "3.Delete Assignment" + "\n" + "4. See ALL assignments" + "\n"
+                            System.out.println("ASSIGNMENT MENU:" + "\n" + "1.Create Assignment" + "\n" + "2.Update Assignment" + "\n" + "3.Delete Assignment" + "\n" + "4.See ALL assignments" + "\n"
                                     + "5.Return to Main Menu" + "\n" + "PLEASE CHOOSE A NUMBER FROM 1 TO 5: ");
 
                             int assignmentChoice = 0;
