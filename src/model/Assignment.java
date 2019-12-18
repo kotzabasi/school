@@ -5,7 +5,7 @@
  */
 package model;
 
-import dao.UtilsDao;
+import school.Utils;
 import java.sql.Timestamp;
 import java.util.Scanner;
 
@@ -98,8 +98,8 @@ public class Assignment {
     public String toString(){
         return "TITLE: "+title+"\n"+
                 "Description: "+description_of_assignment+"\n"+
-                "Submission Date: "+UtilsDao.substractTime(submission_date)+"\n"+
-                "Expiration Date: "+UtilsDao.substractTime(expiration_date)+"\n"+
+                "Submission Date: "+Utils.substractTime(submission_date)+"\n"+
+                "Expiration Date: "+Utils.substractTime(expiration_date)+"\n"+
                 "Stream: "+stream+"\n";
     
 

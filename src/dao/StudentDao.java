@@ -5,6 +5,7 @@
  */
 package dao;
 
+import school.Utils;
 import java.sql.*;
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -112,7 +113,7 @@ public class StudentDao {
                 }
             }
             System.out.println("Tuition Fees: ");
-            int tuition_fees = UtilsDao.onlyInteger();
+            int tuition_fees = Utils.onlyInteger();
             student.setTuition_fees(tuition_fees);
 
             st.setString(1, student.getFirst_name());
@@ -286,17 +287,12 @@ public class StudentDao {
         try {
             Scanner sc = new Scanner(System.in);
             System.out.println("Please type the student_id if  you want to delete this student: ");
-            student_id = UtilsDao.onlyInteger();
+            student_id = Utils.onlyInteger();
             checkByIdAndLastname();
 
             System.out.println("Are you sure you want to delete this student?");
             System.out.println("Please answer with yes or no");
-            String answer = sc.nextLine();
-
-            while (!answer.equalsIgnoreCase("yes") && !answer.equalsIgnoreCase("no")) {
-                System.out.println("Please answer with yes or no");
-                answer = sc.nextLine();
-            }
+            String answer = Utils.answerYesOrNo(sc.nextLine());
             switch (answer) {
                 case "yes":
 
@@ -348,9 +344,9 @@ public class StudentDao {
         PreparedStatement pst = null;
         try {
             System.out.println("FIRST NAME: ");
-            first_name = UtilsDao.notNull(sc.nextLine());
+            first_name = Utils.notNull(sc.nextLine());
             System.out.println("LAST NAME: ");
-            last_name = UtilsDao.notNull(sc.nextLine());
+            last_name = Utils.notNull(sc.nextLine());
 
             String sql = "SELECT student_id,enroll_id,first_name,last_name from student where first_name='" + first_name + "'"
                     + "AND last_name='" + last_name + "'";
@@ -391,9 +387,9 @@ public class StudentDao {
         Connection con = DBUtils.getConnection();
         Scanner sc = new Scanner(System.in);
         System.out.println("FIRST NAME: ");
-            first_name = UtilsDao.notNull(sc.nextLine());
+            first_name = Utils.notNull(sc.nextLine());
             System.out.println("LAST NAME: ");
-            last_name = UtilsDao.notNull(sc.nextLine());
+            last_name = Utils.notNull(sc.nextLine());
   
         PreparedStatement pst = null;
         String sql = "SELECT student_id,enroll_id,first_name,last_name from student where first_name='" + first_name + "'"
@@ -450,7 +446,7 @@ public class StudentDao {
 
             } else {
                 System.err.println("This user does not exist. please try again: ");
-                student_id = UtilsDao.onlyInteger();
+                student_id = Utils.onlyInteger();
                 checkByIdAndLastname();
             }
 
@@ -483,7 +479,7 @@ public class StudentDao {
         Connection con = DBUtils.getConnection();
         PreparedStatement pst = null;
         String sql = "select * from student where student_id=?";
-        student_id = UtilsDao.onlyInteger();
+        student_id = Utils.onlyInteger();
         checkByIdAndLastname();
 
         try {
@@ -559,7 +555,7 @@ public class StudentDao {
     public static void updateStudentFirstName(Student student) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please type the new first name: ");
-        first_name = UtilsDao.notNull(sc.nextLine());
+        first_name = Utils.notNull(sc.nextLine());
         Connection con = DBUtils.getConnection();
         PreparedStatement pst = null;
         String sql = "UPDATE student SET first_name='" + first_name + "'" + "WHERE student_id='" + student_id + "'";
@@ -632,7 +628,7 @@ public class StudentDao {
     public static void updateStudentLastName(Student student) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please type the new last name: ");
-        last_name = UtilsDao.notNull(sc.nextLine());
+        last_name = Utils.notNull(sc.nextLine());
         Connection con = DBUtils.getConnection();
 
         PreparedStatement pstStudent = null;
@@ -683,7 +679,7 @@ public class StudentDao {
     public static void updateStudentTuitionFees(Student student) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please type the new tuition fees: ");
-        int tuition_fees = UtilsDao.onlyInteger();
+        int tuition_fees = Utils.onlyInteger();
         Connection con = DBUtils.getConnection();
         PreparedStatement pst = null;
         String sql = "UPDATE student SET tuition_fees='" + tuition_fees + "'" + "WHERE student_id='" + student_id + "'";

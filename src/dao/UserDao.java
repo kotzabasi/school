@@ -5,6 +5,7 @@
  */
 package dao;
 
+import school.Utils;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -112,7 +113,7 @@ public class UserDao {
     public static String checkPassword() throws ParseException {
         Scanner sc = new Scanner(System.in);
         System.out.println("PASSWORD: " );
-        String s = UtilsDao.notNull(sc.nextLine());
+        String s = Utils.notNull(sc.nextLine());
 
         Connection con = DBUtils.getConnection();
         PreparedStatement pst = null;

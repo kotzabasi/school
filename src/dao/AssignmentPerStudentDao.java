@@ -5,6 +5,7 @@
  */
 package dao;
 
+import school.Utils;
 import static dao.StudentDao.student_id;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -76,12 +77,12 @@ public class AssignmentPerStudentDao {
                 String title = rs.getString("title");
                 Timestamp submission_date = rs.getTimestamp("submission_date");
                 Timestamp expiration_date = rs.getTimestamp("expiration_date");
-                UtilsDao.getDaysBetweenDates(expiration_date);
+                Utils.getDaysBetweenDates(expiration_date);
                 boolean submitted = rs.getBoolean("submitted");
                 System.out.println("\n");
-                System.out.println("ASSIGNMENT: " + title + "\n" + "SUBMISSION DATE: " + UtilsDao.substractTime(submission_date) + "\n"
-                        + "EXPIRATION DATE: " + UtilsDao.substractTime(expiration_date) + "\n" + "SUBMITTED: "
-                        + UtilsDao.sumbitted(submitted) + "\n");
+                System.out.println("ASSIGNMENT: " + title + "\n" + "SUBMISSION DATE: " + Utils.substractTime(submission_date) + "\n"
+                        + "EXPIRATION DATE: " + Utils.substractTime(expiration_date) + "\n" + "SUBMITTED: "
+                        + Utils.sumbitted(submitted) + "\n");
                 bool = rs.wasNull();
 
             }
@@ -187,7 +188,7 @@ public class AssignmentPerStudentDao {
             try {
                 Home.headmasterMenu();
             } catch (ParseException ex) {
-                Logger.getLogger(UtilsDao.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -269,7 +270,7 @@ public class AssignmentPerStudentDao {
     public static void submitAssignmet() throws ParseException {
         Scanner sc = new Scanner(System.in);
         System.out.println("WOULD YOU LIKE TO SUBMIT AN ASSIGNMENT?");
-        String answer = UtilsDao.answerYesOrNo(sc.nextLine());
+        String answer = Utils.answerYesOrNo(sc.nextLine());
         boolean submit = false;
         switch (answer) {
             case "yes":
@@ -349,7 +350,7 @@ public class AssignmentPerStudentDao {
     public static void updateOralMark() {
         Scanner sc = new Scanner(System.in);
         System.out.println("PLEASE TYPE THE MARK:");
-        int oral_mark = UtilsDao.onlyInteger();
+        int oral_mark = Utils.onlyInteger();
         Connection con = DBUtils.getConnection();
         PreparedStatement pst = null;
         String sql = "UPDATE assignment_per_student set oral_mark =" + oral_mark
@@ -384,7 +385,7 @@ public class AssignmentPerStudentDao {
     public static void updateTotalMark() {
         Scanner sc = new Scanner(System.in);
         System.out.println("PLEASE TYPE THE MARK:");
-        int total_mark = UtilsDao.onlyInteger();
+        int total_mark = Utils.onlyInteger();
         Connection con = DBUtils.getConnection();
         PreparedStatement pst = null;
         String sql = "UPDATE assignment_per_student set total_mark =" + total_mark

@@ -5,6 +5,7 @@
  */
 package dao;
 
+import school.Utils;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -15,13 +16,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
-import java.util.Locale;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import menus.Home;
 import model.Course;
-
 import utils.DBUtils;
 
 /**
@@ -168,7 +167,7 @@ public class CourseDao {
         PreparedStatement pst = null;
         try {
             System.out.println("Please type the course title: ");
-            title = UtilsDao.notNull(sc.nextLine());
+            title = Utils.notNull(sc.nextLine());
             String sql = "select course_id,title from course where title ='" + title + "'";
             pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery(sql);
@@ -276,7 +275,7 @@ public class CourseDao {
         try {
             pst = con.prepareStatement(sql);
             System.out.println("Title:");
-            title = UtilsDao.notNull(sc.nextLine());
+            title = Utils.notNull(sc.nextLine());
             course.setTitle(title);
 
             boolean startdateinput = false;
@@ -350,7 +349,7 @@ public class CourseDao {
 
     }
 
-    public static void deleteCourse() {
+    public static void deleteCourse() throws ParseException {
         getAllCourses();
         System.out.println("You have to type the title of the course you want to delete ");
         checkIfCourseExists();
@@ -362,11 +361,22 @@ public class CourseDao {
             pst = con.prepareStatement(sql);
             Scanner sc = new Scanner(System.in);
             System.out.println("type the course_id if  you want to delete this course");
-            course_id = UtilsDao.onlyInteger();
+            course_id = Utils.onlyInteger();
             checkByTitleAndId();
+            System.out.println("Are you sure?");
+            System.out.println("Please answer with yes or no");
+            String answer=Utils.answerYesOrNo(sc.nextLine());
+            
+            switch (answer) {
+                case "yes":
             pst.setInt(1, course_id);
             pst.executeUpdate();
             result = true;
+            break;
+                case "no":
+                    Home.headmasterMenu();
+                    break;
+            }
         } catch (SQLException ex) {
             Logger.getLogger(CourseDao.class.getName()).log(Level.SEVERE, null, ex);
             result = false;
@@ -392,7 +402,7 @@ public class CourseDao {
     public static void updateCourseTitle(int course_id) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please type the new title: ");
-        title = UtilsDao.notNull(sc.nextLine());
+        title = Utils.notNull(sc.nextLine());
         Connection con = DBUtils.getConnection();
         PreparedStatement pst = null;
         String sql = "UPDATE course SET title='" + title + "'" + "WHERE course_id='" + course_id + "'";
@@ -646,7 +656,7 @@ public class CourseDao {
         checkIfCourseExists();
         Scanner sc = new Scanner(System.in);
         System.out.println("Please type the course_id of the course you want to update: ");
-        course_id = UtilsDao.onlyInteger();
+        course_id = Utils.onlyInteger();
         Course course = new Course();
         Connection con = DBUtils.getConnection();
         PreparedStatement pst = null;
@@ -709,6 +719,7 @@ public class CourseDao {
                             break;
                         case 4:
                             updateCourseStream(course_id);
+                            Home.headmasterMenu();
                             break;
                         case 5:
                             updateCourseType(course_id);
@@ -746,7 +757,8 @@ public class CourseDao {
                 title = rs.getString("title");
 
             } else {
-                System.err.println("This user does not exist. please try again: ");
+                System.err.println("This course does not exist. please try again: ");
+                course_id=Utils.onlyInteger();
                 checkByTitleAndId();
             }
         } catch (SQLException ex) {

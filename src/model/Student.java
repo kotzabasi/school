@@ -96,7 +96,8 @@ public class Student {
                 + "Last Name: " + last_name + "\n"
                 + "Date Of Birth: " + date_of_birth + "\n"
                 + "Tuition Fees: " + tuition_fees + "\n"
-                +"Enroll ID: "+enroll_id;
+                +"Enroll ID: "+enroll_id+"\n";
+                        
 
     }
 

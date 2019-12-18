@@ -6,6 +6,7 @@
 package dao;
 
 
+import school.Utils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -122,7 +123,7 @@ public class ScheduleDao {
             System.err.println("PLEASE WAIT....");
             scheduleId(title);
             System.out.println("Type the id of the date for which you want to set a schedule: ");
-            int id = UtilsDao.onlyInteger();
+            int id = Utils.onlyInteger();
             setSchedule(id);
 
         }
@@ -193,7 +194,7 @@ public class ScheduleDao {
             System.out.println("Please type the end date in form: dd/MM/yyyy");
             String end = sc.nextLine();
             Date endDate = new SimpleDateFormat("dd/MM/yyyy").parse(end);
-            List<String> list = UtilsDao.getDates(start1, endDate);
+            List<String> list = Utils.getDates(start1, endDate);
 
             String sql = "INSERT INTO " + title + " (date) VALUES (?)";
             try {
@@ -238,7 +239,7 @@ public class ScheduleDao {
         Connection con = DBUtils.getConnection();
         PreparedStatement pst = null;
         System.out.println("Write the schedule: ");
-        String schedule = UtilsDao.notNull(sc.nextLine());
+        String schedule = Utils.notNull(sc.nextLine());
         String sql = "update " + title + " set schedule='" + schedule + "' where id=" + id;
         boolean change = false;
         try {
@@ -273,7 +274,7 @@ public class ScheduleDao {
             switch (answer) {
                 case "yes":
                     System.out.println("Please type the id:");
-                    id = UtilsDao.onlyInteger();
+                    id = Utils.onlyInteger();
                     setSchedule(id);
                     break;
                 case "no":
@@ -419,7 +420,7 @@ public class ScheduleDao {
                         case 1:
                             System.out.println("IF YOU UPDATE DATE RANGE YOU WILL LOSE ALL TABLE'S DATA");
                             System.out.println("CONTINUE?");
-                            String answer1=UtilsDao.answerYesOrNo(sc.nextLine());
+                            String answer1=Utils.answerYesOrNo(sc.nextLine());
                            switch(answer1){
                                case "yes":
                                truncateSchedule();
@@ -437,10 +438,10 @@ public class ScheduleDao {
                             break;
                         case 3:
                             System.out.println("Please type the ID of the date to change the schedule: ");
-                            int id = UtilsDao.onlyInteger();
+                            int id = Utils.onlyInteger();
                             setSchedule(id);
                             System.err.println("Exit? (yes or no)");
-                            String answer = UtilsDao.answerYesOrNo(sc.nextLine());
+                            String answer = Utils.answerYesOrNo(sc.nextLine());
                             switch (answer) {
                                 case "yes":
                                     Home.headmasterMenu();
@@ -460,7 +461,7 @@ public class ScheduleDao {
                                 SetTimeSchedulePart(type);
                             }
                             System.err.println("Exit? (yes or no)");
-                           String answer2 = UtilsDao.answerYesOrNo(sc.nextLine());
+                           String answer2 = Utils.answerYesOrNo(sc.nextLine());
                             switch (answer2) {
                                 case "yes":
                                     Home.headmasterMenu();
@@ -532,11 +533,11 @@ public class ScheduleDao {
             pst = con.prepareStatement(sql);
             System.out.println("DATE: ");
             System.out.println("Please use dd-MM-yyyy form");
-            String date = UtilsDao.changeFormatString(sc.nextLine());
+            String date = Utils.changeFormatString(sc.nextLine());
             schedule.setDate(date);
             
             System.out.println("SCHEDULE:");
-            String scheduleText = UtilsDao.notNull(sc.nextLine());
+            String scheduleText = Utils.notNull(sc.nextLine());
             schedule.setSchedule(scheduleText);
             
           
@@ -547,7 +548,7 @@ public class ScheduleDao {
             
             System.out.println("YOU HAVE INSERTED A NEW ROW!");
             System.out.println("CONTINUE?");
-            String answer = UtilsDao.answerYesOrNo(sc.nextLine());
+            String answer = Utils.answerYesOrNo(sc.nextLine());
             switch(answer){
                 case "yes":
                     insertScheduleRow();

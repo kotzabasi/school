@@ -5,6 +5,7 @@
  */
 package dao;
 
+import school.Utils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -161,7 +162,7 @@ public class AssignmentDao {
             pst = con.prepareStatement(sql);
             Scanner sc = new Scanner(System.in);
             System.out.println("type the assignment_id if  you want to delete this assignment");
-            assignment_id = UtilsDao.onlyInteger();
+            assignment_id = Utils.onlyInteger();
             pst.setInt(1, assignment_id);
             pst.executeUpdate();
             result = true;
@@ -189,7 +190,7 @@ public class AssignmentDao {
     public static void insertAssignment() {
         System.out.println("Would you like to set up specific submission and expiration dates for this assignment? (Please answer with yes/no)");
         Scanner sc = new Scanner(System.in);
-        String answer = UtilsDao.answerYesOrNo(sc.nextLine());
+        String answer = Utils.answerYesOrNo(sc.nextLine());
         Connection con = DBUtils.getConnection();
         PreparedStatement pst = null;
         String sql = "INSERT INTO assignment(title,description_of_assignment,submission_date,expiration_date,stream)"
@@ -201,10 +202,10 @@ public class AssignmentDao {
                 try {
                     pst = con.prepareStatement(sql);
                     System.out.println("Title:");
-                    title = UtilsDao.notNull(sc.nextLine());
+                    title = Utils.notNull(sc.nextLine());
                     assignment.setTitle(title);
                     System.out.println("Description:");
-                    String description_of_assignment = UtilsDao.notNull(sc.nextLine());
+                    String description_of_assignment = Utils.notNull(sc.nextLine());
                     assignment.setDescription_of_assignment(description_of_assignment);
 
                     boolean subinput = false;
@@ -311,7 +312,7 @@ public class AssignmentDao {
 
         Scanner sc = new Scanner(System.in);
         System.out.println("Please type the new title of the assignment");
-        title = UtilsDao.notNull(sc.nextLine());
+        title = Utils.notNull(sc.nextLine());
         Connection con = DBUtils.getConnection();
         PreparedStatement pst = null;
         String sql = "UPDATE assignment SET title='" + title + "'" + "WHERE assignment_id='" + assignment_id + "'";
@@ -344,7 +345,7 @@ public class AssignmentDao {
     public static void updateAssignmentDescription() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please type the new description of the assignment");
-        String description = UtilsDao.notNull(sc.nextLine());
+        String description = Utils.notNull(sc.nextLine());
         Connection con = DBUtils.getConnection();
         PreparedStatement pst = null;
         String sql = "UPDATE assignment SET description_of_assignment='" + description + "'" + "WHERE assignment_id='" + assignment_id + "'";
@@ -500,11 +501,13 @@ public class AssignmentDao {
         checkIfAssignmentExists();
         Scanner sc = new Scanner(System.in);
         System.out.println("Please type the assignment_id of the assignment you want to update");
+        assignment_id = Utils.onlyInteger();
         Assignment assignment = new Assignment();
         Connection con = DBUtils.getConnection();
         PreparedStatement pst = null;
         String sql = "select * from assignment where assignment_id=?";
-        assignment_id = UtilsDao.onlyInteger();
+        
+        checkByTitleAndId();
         try {
             pst = con.prepareStatement(sql);
             pst.setInt(1, assignment_id);
@@ -610,5 +613,43 @@ public class AssignmentDao {
         }
         return assignment_id;
     }
+    public static void checkByTitleAndId(){
+        Scanner sc = new Scanner(System.in);
+        Connection con = DBUtils.getConnection();
+        PreparedStatement pst = null;
+        try {
 
-}
+            String sql = "SELECT assignment_id,title from assignment where title='" + title + "'"
+                    + "AND assignment_id='" + assignment_id + "'";
+
+            pst = con.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery(sql);
+            if (rs.next()) {
+                assignment_id = rs.getInt("assignment_id");
+                title = rs.getString("title");
+
+            } else {
+                System.err.println("This assignment does not exist. please try again: ");
+                assignment_id=Utils.onlyInteger();
+                checkByTitleAndId();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDao.class.getName()).log(Level.SEVERE, null, ex);
+
+        } finally {
+            try {
+                pst.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(CourseDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(CourseDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+        
+    }
+
+
