@@ -17,6 +17,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import jdk.nashorn.internal.ir.BreakNode;
 import menus.Home;
 import model.Assignment;
 import utils.DBUtils;
@@ -150,7 +151,7 @@ public class AssignmentDao {
         }
     }
 
-    public static void deleteAssignment() {
+    public static void deleteAssignment() throws ParseException {
         getAssignments();
         System.out.println("You have to type the title of the assignment you want to delete");
         checkIfAssignmentExists();
@@ -163,9 +164,20 @@ public class AssignmentDao {
             Scanner sc = new Scanner(System.in);
             System.out.println("type the assignment_id if  you want to delete this assignment");
             assignment_id = Utils.onlyInteger();
-            pst.setInt(1, assignment_id);
-            pst.executeUpdate();
-            result = true;
+            checkByTitleAndId();
+            System.out.println("Are you sure?");
+            System.out.println("Please answer with yes or no");
+            String answer = Utils.answerYesOrNo(sc.nextLine());
+            switch (answer) {
+                case "yes":
+                    pst.setInt(1, assignment_id);
+                    pst.executeUpdate();
+                    result = true;
+                    break;
+                case "no":
+                    Home.headmasterMenu();
+                    break;
+            }
         } catch (SQLException ex) {
             Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
             result = false;
@@ -184,6 +196,7 @@ public class AssignmentDao {
         }
         if (result) {
             System.err.println("ASSIGNMENT HAS BEEN DELETED");
+            System.out.println();
         }
     }
 
@@ -214,7 +227,8 @@ public class AssignmentDao {
                             System.out.println("Submission Date(yyyy-mm-dd hh:mm:ss):");
                             String subDate = sc.nextLine();
 
-                            Timestamp submission_date = Timestamp.valueOf(subDate);
+                            Timestamp subm_date = Timestamp.valueOf(subDate);
+                            Timestamp submission_date = Utils.addTime(subm_date);
                             assignment.setSubmission_date(submission_date);
 
                             subinput = true;
@@ -228,9 +242,10 @@ public class AssignmentDao {
                     while (!exinput) {
                         try {
                             System.out.println("Expiration Date(yyyy-mm-dd hh:mm:ss):");
-                            String subDate = sc.nextLine();
+                            String expDate = sc.nextLine();
 
-                            Timestamp expiration_date = Timestamp.valueOf(subDate);
+                            Timestamp exp_date = Timestamp.valueOf(expDate);
+                            Timestamp expiration_date = Utils.addTime(exp_date);
                             assignment.setExpiration_date(expiration_date);
 
                             exinput = true;
@@ -253,18 +268,23 @@ public class AssignmentDao {
                     System.out.println("YOU HAVE INSERTED AN ASSIGNMENT" + "\n" + assignment.toString());
 
                 } catch (SQLException ex) {
-                    Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(AssignmentDao.class
+                            .getName()).log(Level.SEVERE, null, ex);
 
                 } finally {
                     try {
                         pst.close();
+
                     } catch (SQLException ex) {
-                        Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(AssignmentDao.class
+                                .getName()).log(Level.SEVERE, null, ex);
                     }
                     try {
                         con.close();
+
                     } catch (SQLException ex) {
-                        Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(AssignmentDao.class
+                                .getName()).log(Level.SEVERE, null, ex);
                     }
                 }
                 break;
@@ -289,18 +309,23 @@ public class AssignmentDao {
                     System.out.println("YOU HAVE INSERTED AN ASSIGNMENT" + "\n" + assignment.toString());
 
                 } catch (SQLException ex) {
-                    Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(AssignmentDao.class
+                            .getName()).log(Level.SEVERE, null, ex);
 
                 } finally {
                     try {
                         pst.close();
+
                     } catch (SQLException ex) {
-                        Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(AssignmentDao.class
+                                .getName()).log(Level.SEVERE, null, ex);
                     }
                     try {
                         con.close();
+
                     } catch (SQLException ex) {
-                        Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(AssignmentDao.class
+                                .getName()).log(Level.SEVERE, null, ex);
                     }
                 }
                 break;
@@ -321,20 +346,26 @@ public class AssignmentDao {
             pst = con.prepareStatement(sql);
             pst.executeUpdate();
             change = true;
+
         } catch (SQLException ex) {
-            Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AssignmentDao.class
+                    .getName()).log(Level.SEVERE, null, ex);
             change = false;
 
         } finally {
             try {
                 pst.close();
+
             } catch (SQLException ex) {
-                Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AssignmentDao.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
             try {
                 con.close();
+
             } catch (SQLException ex) {
-                Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AssignmentDao.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
         }
         if (change) {
@@ -354,20 +385,26 @@ public class AssignmentDao {
             pst = con.prepareStatement(sql);
             pst.executeUpdate();
             change = true;
+
         } catch (SQLException ex) {
-            Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AssignmentDao.class
+                    .getName()).log(Level.SEVERE, null, ex);
             change = false;
 
         } finally {
             try {
                 pst.close();
+
             } catch (SQLException ex) {
-                Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AssignmentDao.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
             try {
                 con.close();
+
             } catch (SQLException ex) {
-                Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AssignmentDao.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
         }
         if (change) {
@@ -382,8 +419,6 @@ public class AssignmentDao {
             System.out.println("Please type the new submission date of the assignment (yyyy-mm-dd hh:mm:ss)");
             String subDate = sc.nextLine();
             Timestamp submission_date = Timestamp.valueOf(subDate);
-           
-           
 
             Connection con = DBUtils.getConnection();
             PreparedStatement pst = null;
@@ -393,20 +428,26 @@ public class AssignmentDao {
                 pst = con.prepareStatement(sql);
                 pst.executeUpdate();
                 change = true;
+
             } catch (SQLException ex) {
-                Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AssignmentDao.class
+                        .getName()).log(Level.SEVERE, null, ex);
                 change = false;
 
             } finally {
                 try {
                     pst.close();
+
                 } catch (SQLException ex) {
-                    Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(AssignmentDao.class
+                            .getName()).log(Level.SEVERE, null, ex);
                 }
                 try {
                     con.close();
+
                 } catch (SQLException ex) {
-                    Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(AssignmentDao.class
+                            .getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if (change) {
@@ -435,20 +476,26 @@ public class AssignmentDao {
                 pst = con.prepareStatement(sql);
                 pst.executeUpdate();
                 change = true;
+
             } catch (SQLException ex) {
-                Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AssignmentDao.class
+                        .getName()).log(Level.SEVERE, null, ex);
                 change = false;
 
             } finally {
                 try {
                     pst.close();
+
                 } catch (SQLException ex) {
-                    Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(AssignmentDao.class
+                            .getName()).log(Level.SEVERE, null, ex);
                 }
                 try {
                     con.close();
+
                 } catch (SQLException ex) {
-                    Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(AssignmentDao.class
+                            .getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if (change) {
@@ -474,20 +521,26 @@ public class AssignmentDao {
             pst = con.prepareStatement(sql);
             pst.executeUpdate();
             change = true;
+
         } catch (SQLException ex) {
-            Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AssignmentDao.class
+                    .getName()).log(Level.SEVERE, null, ex);
             change = false;
 
         } finally {
             try {
                 pst.close();
+
             } catch (SQLException ex) {
-                Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AssignmentDao.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
             try {
                 con.close();
+
             } catch (SQLException ex) {
-                Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AssignmentDao.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
         }
         if (change) {
@@ -506,7 +559,7 @@ public class AssignmentDao {
         Connection con = DBUtils.getConnection();
         PreparedStatement pst = null;
         String sql = "select * from assignment where assignment_id=?";
-        
+
         checkByTitleAndId();
         try {
             pst = con.prepareStatement(sql);
@@ -519,20 +572,26 @@ public class AssignmentDao {
                 assignment.setSubmission_date(rs.getTimestamp(4));
                 assignment.setExpiration_date(rs.getTimestamp(5));
                 assignment.setStream(rs.getString(6));
+
             }
         } catch (SQLException ex) {
-            Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AssignmentDao.class
+                    .getName()).log(Level.SEVERE, null, ex);
 
         } finally {
             try {
                 pst.close();
+
             } catch (SQLException ex) {
-                Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AssignmentDao.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
             try {
                 con.close();
+
             } catch (SQLException ex) {
-                Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AssignmentDao.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
 
         }
@@ -597,23 +656,29 @@ public class AssignmentDao {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AssignmentDao.class
+                    .getName()).log(Level.SEVERE, null, ex);
 
         } finally {
             try {
                 pst.close();
+
             } catch (SQLException ex) {
-                Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AssignmentDao.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
             try {
                 con.close();
+
             } catch (SQLException ex) {
-                Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AssignmentDao.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
         }
         return assignment_id;
     }
-    public static void checkByTitleAndId(){
+
+    public static void checkByTitleAndId() {
         Scanner sc = new Scanner(System.in);
         Connection con = DBUtils.getConnection();
         PreparedStatement pst = null;
@@ -630,26 +695,30 @@ public class AssignmentDao {
 
             } else {
                 System.err.println("This assignment does not exist. please try again: ");
-                assignment_id=Utils.onlyInteger();
+                assignment_id = Utils.onlyInteger();
                 checkByTitleAndId();
+
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CourseDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CourseDao.class
+                    .getName()).log(Level.SEVERE, null, ex);
 
         } finally {
             try {
                 pst.close();
+
             } catch (SQLException ex) {
-                Logger.getLogger(CourseDao.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CourseDao.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
             try {
                 con.close();
+
             } catch (SQLException ex) {
-                Logger.getLogger(CourseDao.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CourseDao.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
-        
-    }
 
-
+}

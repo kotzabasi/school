@@ -92,11 +92,12 @@ public class Student {
 
     @Override
     public String toString() {
-        return "First Name: " + first_name + "\n"
+        return   "STUDENT ID: "+student_id+"\n"
+                +"First Name: " + first_name + "\n"
                 + "Last Name: " + last_name + "\n"
                 + "Date Of Birth: " + date_of_birth + "\n"
                 + "Tuition Fees: " + tuition_fees + "\n"
-                +"Enroll ID: "+enroll_id+"\n";
+                +"Enroll ID: "+enroll_id;
                         
 
     }

@@ -4,9 +4,11 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/liana/Documents/NetBeansProjects/school/src/menus/Home.java</file>
+            <file>file:/C:/Users/liana/Documents/NetBeansProjects/school/src/dao/TrainerDao.java</file>
+            <file>file:/C:/Users/liana/Documents/NetBeansProjects/school/src/model/Trainer.java</file>
             <file>file:/C:/Users/liana/Documents/NetBeansProjects/school/src/school/School.java</file>
             <file>file:/C:/Users/liana/Documents/NetBeansProjects/school/src/dao/CourseDao.java</file>
-            <file>file:/C:/Users/liana/Documents/NetBeansProjects/school/src/dao/AssignmentDao.java</file>
+            <file>file:/C:/Users/liana/Documents/NetBeansProjects/school/src/dao/StudentPerCourseDao.java</file>
         </group>
     </open-files>
 </project-private>

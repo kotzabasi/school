@@ -6,7 +6,6 @@
 package dao;
 
 import school.Utils;
-import static dao.StudentDao.student_id;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -104,7 +103,7 @@ public class AssignmentPerStudentDao {
         if (bool) {
             System.out.println("THERE ARE NO ASSIGNMENTS YET!");
             try {
-                Home.headmasterMenu();
+                Home.subMenu();
             } catch (ParseException ex) {
                 Logger.getLogger(AssignmentsPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -207,7 +206,6 @@ public class AssignmentPerStudentDao {
             ResultSet rs = pst.executeQuery(sql);
             System.err.println("ALL STUDENTS WHO HAVE ONE OR MORE ASSIGNMENTS "
                     + "AND THE RELEVANT COURSES: ");
-            System.out.println();
 
             while (rs.next()) {
                 String firstname = rs.getString(1);

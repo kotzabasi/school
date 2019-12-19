@@ -219,4 +219,15 @@ public class Utils {
         }
         return dif;
     }
-}
+    public static Timestamp addTime (Timestamp t){
+        Timestamp t2 = null;
+        try {
+            t2 = new Timestamp(t.getTime() + (1000 * 60 * 60 * 2));
+        } catch (NullPointerException e) {
+            System.out.println();
+        }
+        return t2;
+    }
+        
+    }
+

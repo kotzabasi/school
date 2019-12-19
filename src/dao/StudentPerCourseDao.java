@@ -20,6 +20,7 @@ import menus.Home;
 import model.Schedule;
 import model.Student;
 import model.StudentPerCourse;
+import school.Utils;
 
 
 import utils.DBUtils;
@@ -165,8 +166,8 @@ public class StudentPerCourseDao {
 
     public static void createStudentPerCourse() throws ParseException {
         Scanner sc = new Scanner(System.in);
-        System.out.println("1. Students not enrolled to a course" + "\n" + "2.Students already enrolled to one course" + "\n"
-                + "3. Exit" + "\n");
+        System.out.println("1.Students not enrolled to a course" + "\n" + "2.Students already enrolled to one course" + "\n"
+                + "3.Exit" + "\n");
         int answer = 0;
 
         do {
@@ -282,14 +283,10 @@ public class StudentPerCourseDao {
         String last_name = StudentDao.last_name;
         StudentDao.fetchStudentId(first_name, last_name);
         int student_id = StudentDao.student_id;
+        checkStudentPerCourseExists(course_id, student_id);
 
         System.out.println("Are  you sure you want to delete " + first_name + " " + last_name + " from this course?");
-        String answer = sc.nextLine().toLowerCase();
-        while (!answer.equalsIgnoreCase("yes") && !answer.equalsIgnoreCase("no")) {
-            System.out.println("Please answer with yes or no");
-            answer = sc.nextLine().toLowerCase();
-        }
-
+        String answer = Utils.answerYesOrNo(sc.nextLine());
         switch (answer) {
             case "yes":
 
@@ -458,37 +455,6 @@ public class StudentPerCourseDao {
         return "";
     }
 
-//    public static String showSecondEnrolled(int student_id) {
-//
-//        Connection con = DBUtils.getConnection();
-//        PreparedStatement pst = null;
-//        String sql = "select title as course from course inner join student_per_course on \n"
-//                + "course.course_id=student_per_course.secondcourse_id where student_id=" + student_id;
-//        try {
-//            pst = con.prepareStatement(sql);
-//            ResultSet rs = pst.executeQuery(sql);
-//
-//            while (rs.next()) {
-//                String title = rs.getString(1);
-//                System.out.println("COURSE: " + title);
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(StudentPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
-//        } finally {
-//
-//            try {
-//                pst.close();
-//            } catch (SQLException ex) {
-//                Logger.getLogger(StudentPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//            try {
-//                con.close();
-//            } catch (SQLException ex) {
-//                Logger.getLogger(StudentPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//        return "";
-//    }
 
     public static void setSecondcourse(int enroll_id) throws ParseException {
         Scanner sc = new Scanner(System.in);
@@ -500,11 +466,7 @@ public class StudentPerCourseDao {
         CourseDao.fetchCourseId(title);
         System.out.println("Are  you sure you want to enroll to course " + title + "?" + "\n");
         System.out.println("Please answer with yes or no" + "\n");
-        String answer = sc.nextLine().toLowerCase();
-        while (!answer.equalsIgnoreCase("yes") && !answer.equalsIgnoreCase("no")) {
-            System.out.println("Please answer with yes or no");
-            answer = sc.nextLine().toLowerCase();
-        }
+        String answer = Utils.answerYesOrNo(sc.nextLine());
         boolean change = false;
         switch (answer) {
             case "yes":
@@ -543,40 +505,7 @@ public class StudentPerCourseDao {
         Home.subMenu();
     }
 
-//    public static void getEnrolledCourses(int student_id) {
-//        Connection con = DBUtils.getConnection();
-//        PreparedStatement pst = null;
-//        String sql = "select distinct title as course from course inner join student_per_course "
-//                + "on student_per_course.course_id=course.course_id\n"
-//                + "or course.course_id=student_per_course.secondcourse_id\n"
-//                + "where student_per_course.student_id="+student_id;
-//
-//        try {
-//            pst = con.prepareStatement(sql);
-//            ResultSet rs = pst.executeQuery(sql);
-//
-//            while (rs.next()) {
-//                String course = rs.getString(1);
-//                String course2 = rs.getString(1);
-//                System.out.println("COURSE: " + course + "\n" + "COURSE2: " + course2);
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(StudentPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
-//        } finally {
-//
-//            try {
-//                pst.close();
-//            } catch (SQLException ex) {
-//                Logger.getLogger(StudentPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//            try {
-//                con.close();
-//            } catch (SQLException ex) {
-//                Logger.getLogger(StudentPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//
-//    }
+
     public static void studentSchedule() throws ParseException {
         System.out.println("For which of your courses do you want to see the schedule?");
         CourseDao.checkIfCourseExists();
@@ -669,5 +598,42 @@ public class StudentPerCourseDao {
             Home.headmasterMenu();
         }
 
+    }
+    public static void checkStudentPerCourseExists(int course_id,int student_id) throws ParseException{
+        boolean bool = true;
+        Connection con = DBUtils.getConnection();
+        PreparedStatement pst = null;
+        String sql="SELECT enroll_id from student_per_course where course_id="+course_id+" and student_id="+student_id+
+                " or secondcourse_id="+course_id+" and student_id="+student_id;
+        try {
+            pst = con.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery(sql);
+
+            while (rs.next()) {
+                int enroll_id = rs.getInt("enroll_id");
+                bool = rs.wasNull();
+            }
+             } catch (SQLException ex) {
+            Logger.getLogger(StudentPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+
+            try {
+                pst.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(StudentPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(StudentPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (bool) {
+            System.err.println("THIS STUDENT IS NOT ENROLLED IN THIS COURSE!");
+            Home.headmasterMenu();
+        }
+
+        
+        
     }
 }

@@ -53,7 +53,7 @@ public class StudentDao {
                 Student student = new Student(student_id, firstname, lastname, date_of_birth, tuition_fees, enroll_id);
 
                 list.add(student);
-                System.out.println(student.toString());
+                System.out.println(student.toString()+"\n");
 
             }
         } catch (SQLException ex) {

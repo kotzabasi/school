@@ -10,7 +10,7 @@ package model;
  * @author liana
  */
 public class Trainer {
-    
+
     private int trainer_id;
     private String firstname;
     private String lastname;
@@ -22,9 +22,9 @@ public class Trainer {
         this.lastname = lastname;
         this.subject = subject;
     }
-    
-    public Trainer(){
-        
+
+    public Trainer() {
+
     }
 
     public int getTrainer_id() {
@@ -32,7 +32,7 @@ public class Trainer {
     }
 
     public void setTrainer_id(int trainer_id) {
-    this.trainer_id = trainer_id;
+        this.trainer_id = trainer_id;
     }
 
     public String getFirstname() {
@@ -40,7 +40,7 @@ public class Trainer {
     }
 
     public void setFirstname(String firstname) {
-      this.firstname = firstname;
+        this.firstname = firstname;
     }
 
     public String getLastname() {
@@ -48,7 +48,7 @@ public class Trainer {
     }
 
     public void setLastname(String lastname) {
-       this.lastname = lastname;
+        this.lastname = lastname;
     }
 
     public String getSubject() {
@@ -56,16 +56,16 @@ public class Trainer {
     }
 
     public void setSubject(String subject) {
-      this.subject = subject;
+        this.subject = subject;
     }
+
     @Override
-    public String toString(){
-       return    
-                 "First Name: " + firstname + "\n"
+    public String toString() {
+        return    "Trainer ID: " + trainer_id+"\n"
+                + "First Name: " + firstname + "\n"
                 + "Last Name: " + lastname + "\n"
                 + "Subject: " + subject;
-                
 
     }
-    
+
 }

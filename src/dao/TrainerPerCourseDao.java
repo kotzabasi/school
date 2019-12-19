@@ -71,6 +71,14 @@ public class TrainerPerCourseDao {
                 Logger.getLogger(TrainerPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+         if (list.isEmpty()) {
+            System.out.println("THERE ARE NO TRAINERS IN THIS COURSE YET!" + "\n");
+            try {
+                Home.headmasterMenu();
+            } catch (ParseException ex) {
+                Logger.getLogger(StudentPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
         return list;
 
@@ -150,14 +158,9 @@ public class TrainerPerCourseDao {
         TrainerDao.fetchTrainerId(firstname, lastname);
         int trainer_id = TrainerDao.trainer_id;
         System.out.println("Are  you sure you want to delete " + firstname + " " + lastname + " from this course?");
-        String answer = sc.nextLine();
-        while (!answer.equalsIgnoreCase("yes") && !answer.equalsIgnoreCase("no")) {
-            System.out.println("Please answer with yes or no");
-            answer = sc.nextLine();
-        }
+        String answer = Utils.answerYesOrNo(sc.nextLine());
         switch (answer) {
             case "yes":
-
                 Connection con = DBUtils.getConnection();
                 PreparedStatement pst = null;
                 String sql = "DELETE FROM trainer_per_course WHERE course_id=" + course_id
