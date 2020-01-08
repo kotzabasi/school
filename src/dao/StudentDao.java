@@ -53,7 +53,9 @@ public class StudentDao {
                 Student student = new Student(student_id, firstname, lastname, date_of_birth, tuition_fees, enroll_id);
 
                 list.add(student);
-                System.out.println(student.toString()+"\n");
+                System.out.println(student.toString());
+                StudentPerCourseDao.showCourseEnrolled(student_id);
+                System.out.println("\n");
 
             }
         } catch (SQLException ex) {

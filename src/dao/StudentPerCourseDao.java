@@ -22,7 +22,6 @@ import model.Student;
 import model.StudentPerCourse;
 import school.Utils;
 
-
 import utils.DBUtils;
 
 /**
@@ -273,67 +272,6 @@ public class StudentPerCourseDao {
 
     }
 
-    public static void deleteStudentPerCourse() throws ParseException {
-        Scanner sc = new Scanner(System.in);
-        getAllStudentsPerCourse();
-        int course_id = CourseDao.course_id;
-        System.out.println("Select a student to delete." + "\n" + "Please type first name and last name");
-        StudentDao.checkIfStudentExists();
-        String first_name = StudentDao.first_name;
-        String last_name = StudentDao.last_name;
-        StudentDao.fetchStudentId(first_name, last_name);
-        int student_id = StudentDao.student_id;
-        checkStudentPerCourseExists(course_id, student_id);
-
-        System.out.println("Are  you sure you want to delete " + first_name + " " + last_name + " from this course?");
-        String answer = Utils.answerYesOrNo(sc.nextLine());
-        switch (answer) {
-            case "yes":
-
-                Connection con = DBUtils.getConnection();
-                PreparedStatement pst = null;
-                String sql = "DELETE FROM student_per_course WHERE course_id=" + course_id
-                        + " AND student_id=" + student_id;
-                boolean result = false;
-                try {
-                    pst = con.prepareStatement(sql);
-                    pst.executeUpdate();
-                    result = true;
-                    enroll_id = getEnrollId(student_id);
-                    StudentDao.deleteEnrollId(enroll_id);
-                } catch (SQLException ex) {
-                    Logger.getLogger(StudentPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
-                    result = false;
-                } finally {
-
-                    try {
-                        pst.close();
-                    } catch (SQLException ex) {
-                        Logger.getLogger(StudentPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    try {
-                        con.close();
-                    } catch (SQLException ex) {
-                        Logger.getLogger(StudentPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-                if (result) {
-                    System.err.println("STUDENT " + StudentDao.first_name + " " + StudentDao.last_name + " HAS BEEN DELETED FROM " + CourseDao.title);
-                }
-                Home.headmasterMenu();
-                break;
-            case "no": {
-                try {
-                    Home.headmasterMenu();
-                } catch (ParseException ex) {
-                    Logger.getLogger(StudentPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-
-            break;
-        }
-    }
-
     public static int getEnrollId(int student_id) {
 
         Connection con = DBUtils.getConnection();
@@ -395,7 +333,6 @@ public class StudentPerCourseDao {
                     System.err.println("You already have been enrolled to two courses! For more come next year!");
                     System.err.println("Goodbye");
                     showCourseEnrolled(student_id);
-//                    showSecondEnrolled(student_id);
                     System.out.println("\n");
                     Home.subMenu();
                     break;
@@ -455,7 +392,6 @@ public class StudentPerCourseDao {
         return "";
     }
 
-
     public static void setSecondcourse(int enroll_id) throws ParseException {
         Scanner sc = new Scanner(System.in);
         System.out.println("LIST OF COURSES:" + "\n");
@@ -505,7 +441,6 @@ public class StudentPerCourseDao {
         Home.subMenu();
     }
 
-
     public static void studentSchedule() throws ParseException {
         System.out.println("For which of your courses do you want to see the schedule?");
         CourseDao.checkIfCourseExists();
@@ -535,9 +470,9 @@ public class StudentPerCourseDao {
 
         } catch (SQLException ex) {
 //            Logger.getLogger(StudentPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
-             System.out.println("THERE IS NO SCHEDULE YET!");
-             Home.subMenu();
-           
+            System.out.println("THERE IS NO SCHEDULE YET!");
+            Home.subMenu();
+
         } finally {
 
             try {
@@ -570,12 +505,12 @@ public class StudentPerCourseDao {
             ResultSet rs = pst.executeQuery(sql);
 
             while (rs.next()) {
-                int student_id=rs.getInt("student_id");
+                int student_id = rs.getInt("student_id");
                 String first_name = rs.getString("first_name");
                 String last_name = rs.getString("last_name");
                 System.out.println("FIRST NAME: " + first_name + "\n"
                         + "LAST NAME: " + last_name + "\n");
-               
+
                 bool = rs.wasNull();
             }
         } catch (SQLException ex) {
@@ -599,12 +534,13 @@ public class StudentPerCourseDao {
         }
 
     }
-    public static void checkStudentPerCourseExists(int course_id,int student_id) throws ParseException{
+
+    public static void checkStudentPerCourseExists(int course_id, int student_id) throws ParseException {
         boolean bool = true;
         Connection con = DBUtils.getConnection();
         PreparedStatement pst = null;
-        String sql="SELECT enroll_id from student_per_course where course_id="+course_id+" and student_id="+student_id+
-                " or secondcourse_id="+course_id+" and student_id="+student_id;
+        String sql = "SELECT enroll_id from student_per_course where course_id=" + course_id + " and student_id=" + student_id
+                + " or secondcourse_id=" + course_id + " and student_id=" + student_id;
         try {
             pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery(sql);
@@ -613,7 +549,7 @@ public class StudentPerCourseDao {
                 int enroll_id = rs.getInt("enroll_id");
                 bool = rs.wasNull();
             }
-             } catch (SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(StudentPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
 
@@ -633,7 +569,75 @@ public class StudentPerCourseDao {
             Home.headmasterMenu();
         }
 
-        
-        
     }
+
+    public static void deleteStudentPerCourse() throws ParseException {
+        Scanner sc = new Scanner(System.in);
+        StudentDao.getAllStudents();
+        System.out.println("Select a student to delete." + "\n" + "Please type first name and last name");
+        StudentDao.checkIfStudentExists();
+        String first_name = StudentDao.first_name;
+        String last_name = StudentDao.last_name;
+        StudentDao.fetchStudentId(first_name, last_name);
+        int student_id = StudentDao.student_id;
+        CourseDao.checkIfCourseExists();
+        int course_id = CourseDao.course_id;
+        checkStudentPerCourseExists(course_id, student_id);
+
+        System.out.println("Are  you sure you want to delete " + first_name + " " + last_name + " from this course?");
+        String answer = Utils.answerYesOrNo(sc.nextLine());
+        switch (answer) {
+            case "yes":
+
+                Connection con = DBUtils.getConnection();
+                PreparedStatement pst = null;
+                PreparedStatement pst2 = null;
+                String sql = "update student_per_course set course_id=null where course_id=" + course_id
+                        + " and student_id=" + student_id;
+                String sql1="update student_per_course set secondcourse_id=null where secondcourse_id=" + course_id
+                        + " and student_id=" + student_id;
+                boolean result = false;
+                try {
+                    con.setAutoCommit(false);
+                    pst = con.prepareStatement(sql);
+                    pst2=con.prepareStatement(sql1);
+                    pst.execute();
+                    pst2.execute();
+                    con.commit();
+                    result = true;
+                } catch (SQLException ex) {
+                    Logger.getLogger(StudentPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
+                    result = false;
+                } finally {
+
+                    try {
+                        pst.close();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(StudentPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    try {
+                        con.close();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(StudentPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if (result) {
+                    System.err.println("STUDENT " + StudentDao.first_name + " " + StudentDao.last_name + " HAS BEEN DELETED FROM " + CourseDao.title);
+                }
+                Home.headmasterMenu();
+                break;
+            case "no": {
+                try {
+                    Home.headmasterMenu();
+                } catch (ParseException ex) {
+                    Logger.getLogger(StudentPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            break;
+        }
+    }
+
 }
+
+

@@ -360,6 +360,7 @@ public class Home {
                                                 headmasterMenu();
                                                 break;
                                             case 4:
+                                                StudentPerCourseDao.deleteStudentPerCourse();
                                                 headmasterMenu();
                                                 break;
                                         }
