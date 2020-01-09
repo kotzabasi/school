@@ -33,7 +33,7 @@ public class StudentPerCourseDao {
     public static int enroll_id;
     static int secondCourse;
 
-    public static ArrayList<Student> getAllStudentsPerCourse() {
+    public static ArrayList<Student> getAllStudentsPerCourse() throws ParseException {
 
         CourseDao.getAllCourses();
         System.out.println("For which course you want to see a list of students?");
@@ -315,7 +315,7 @@ public class StudentPerCourseDao {
                 int student_id = rs.getInt(3);
                 spcr.setCourse_id(rs.getInt(2));
                 int course_id = rs.getInt(2);
-                spcr.setCourse_id2(rs.getInt(4));
+                spcr.setSecondCourse_id(rs.getInt(4));
                 secondCourse = rs.getInt(4);
 
                 if (rs.wasNull()) {

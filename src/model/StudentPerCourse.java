@@ -14,7 +14,7 @@ public class StudentPerCourse {
     private int enrol_id;
     private int student_id;
     private int course_id;
-    private int course_id2;
+    private int secondCourse_id;
 
     public StudentPerCourse(int enrol_id, int student_id, int course_id) {
         this.enrol_id = enrol_id;
@@ -49,13 +49,15 @@ public class StudentPerCourse {
         this.course_id = course_id;
     }
 
-    public int getCourse_id2() {
-        return course_id2;
+    public int getSecondCourse_id() {
+        return secondCourse_id;
     }
 
-    public void setCourse_id2(int course_id2) {
-        this.course_id2 = course_id2;
+    public void setSecondCourse_id(int secondCourse_id) {
+        this.secondCourse_id = secondCourse_id;
     }
+
+  
     
     
     

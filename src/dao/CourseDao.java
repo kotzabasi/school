@@ -5,6 +5,7 @@
  */
 package dao;
 
+import static dao.CourseDao.title;
 import school.Utils;
 import java.sql.Connection;
 import java.sql.Date;
@@ -32,7 +33,7 @@ public class CourseDao {
     public static int course_id;
     public static String title;
 
-    public static ArrayList<Course> getAllCourses() {
+    public static ArrayList<Course> getAllCourses() throws ParseException {
         ArrayList<Course> list = new ArrayList<Course>();
         Connection con = DBUtils.getConnection();
         PreparedStatement pst = null;
@@ -53,6 +54,7 @@ public class CourseDao {
                 Course course = new Course(course_id, title, start_date, end_date, stream, type, schedule);
                 list.add(course);
                 System.out.println(course.toString());
+               
 
             }
         } catch (SQLException ex) {
@@ -365,14 +367,14 @@ public class CourseDao {
             checkByTitleAndId();
             System.out.println("Are you sure?");
             System.out.println("Please answer with yes or no");
-            String answer=Utils.answerYesOrNo(sc.nextLine());
-            
+            String answer = Utils.answerYesOrNo(sc.nextLine());
+
             switch (answer) {
                 case "yes":
-            pst.setInt(1, course_id);
-            pst.executeUpdate();
-            result = true;
-            break;
+                    pst.setInt(1, course_id);
+                    pst.executeUpdate();
+                    result = true;
+                    break;
                 case "no":
                     Home.headmasterMenu();
                     break;
@@ -758,7 +760,7 @@ public class CourseDao {
 
             } else {
                 System.err.println("This course does not exist. please try again: ");
-                course_id=Utils.onlyInteger();
+                course_id = Utils.onlyInteger();
                 checkByTitleAndId();
             }
         } catch (SQLException ex) {
@@ -778,4 +780,8 @@ public class CourseDao {
         }
     }
 
+
+
 }
+
+

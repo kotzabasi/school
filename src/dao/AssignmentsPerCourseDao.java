@@ -95,7 +95,7 @@ public class AssignmentsPerCourseDao {
 
     }
 
-    public static void assignAssignmentToCourse() {
+    public static void assignAssignmentToCourse() throws ParseException {
         Scanner sc = new Scanner(System.in);
         System.err.println("LIST OF COURSES: " + "\n");
         CourseDao.getAllCourses();

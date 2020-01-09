@@ -5,10 +5,9 @@
  */
 package model;
 
-
+import dao.CourseDao;
 import java.time.LocalDate;
 import java.util.Scanner;
-
 
 /**
  *
@@ -33,10 +32,6 @@ public class Course {
         this.type = type;
         this.schedule = schedule;
     }
-
-  
-
-  
 
     public Course() {
 
@@ -81,8 +76,6 @@ public class Course {
         this.end_date = end_date;
     }
 
- 
-  
     public String getStream() {
         return stream;
     }
@@ -106,11 +99,11 @@ public class Course {
     public void setSchedule(boolean schedule) {
         this.schedule = schedule;
     }
-    
 
     @Override
     public String toString() {
-        return "Title: " + title + "\n"
+        return "Course ID: " + course_id + "\n"
+                + "Title: " + title + "\n"
                 + "Start Date: " + start_date + "\n"
                 + "End Date: " + end_date + "\n"
                 + "Stream: " + stream + "\n"
@@ -139,7 +132,7 @@ public class Course {
         String s = sc.nextLine().toUpperCase();
 
         do {
-            if (s.equalsIgnoreCase("JAVA") || s.equalsIgnoreCase("PYTHON")|| s.equalsIgnoreCase("FRONT")){
+            if (s.equalsIgnoreCase("JAVA") || s.equalsIgnoreCase("PYTHON") || s.equalsIgnoreCase("FRONT")) {
                 break;
             } else {
                 System.err.println("You have to choose between java, python,front");
@@ -148,6 +141,16 @@ public class Course {
 
         } while (true);
         return s;
+
+    }
+
+    public void showIfCourseHasStudents() {
+        StudentPerCourse test = new StudentPerCourse();
+        if (course_id == test.getCourse_id() || course_id == test.getSecondCourse_id()) {
+            System.err.println("COURSE WITH STUDENTS");
+        } else {
+            System.out.println("WITH OUT STUDENTS");
+        }
 
     }
 

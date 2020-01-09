@@ -100,8 +100,7 @@ public class Home {
 
     }
 
-    public static void trainerMenu() {
-        System.err.println(current);
+    public static void trainerMenu() throws ParseException {
         Scanner sc = new Scanner(System.in);
         System.err.println("INSERTING TRAINER MENU....");
         System.out.println("PLEASE TYPE YOUR NAME");
@@ -109,16 +108,17 @@ public class Home {
         String firstname = TrainerDao.firstname;
         String lastname = TrainerDao.lastname;
         int trainer_id = TrainerDao.fetchTrainerId(firstname, lastname);
+        System.err.println("If you don't see COURSE, it means that you haven't been assigned to a course yet!");
         TrainerPerCourseDao.showCoursePerTrainer(trainer_id);
         trainerSubmenu();
 
     }
 
-    public static void trainerSubmenu() {
+    public static void trainerSubmenu() throws ParseException {
         Scanner sc = new Scanner(System.in);
-        System.out.println("\n");
+        System.out.println("");
         System.out.println("MAIN MENU:" + "\n"
-                + "1.View all students per course" + "\n"
+                + "1.View students of your courses" + "\n"
                 + "2.Mark assignments" + "\n" + "3.Exit" + "\n" + "PLEASE CHOOSE A NUMBER FROM 1 to 3: ");
         int choice = 0;
         do {
@@ -139,7 +139,7 @@ public class Home {
                             trainerMenu();
                             break;
                         case 3:
-                            trainerSubmenu();
+                            userLogin();
                     }
 
                 }
@@ -149,6 +149,7 @@ public class Home {
 
             }
         } while (sc.hasNext());
+        
 
     }
 
@@ -527,9 +528,7 @@ public class Home {
 
     public static void adminMenu() throws ParseException {
         Scanner sc = new Scanner(System.in);
-        System.err.println(current);
-        System.out.println("MAIN MENU:" + "\n" + "1.See all users" + "\n" + "2.Reset Password to default"
-                + "\n" + "3.Exit" + "\n");
+        System.out.println("MAIN MENU:" + "\n" + "1.See all users" + "\n" + "2.Exit" + "\n");
         int choiceMenu = 0;
         do {
             try {
@@ -544,7 +543,6 @@ public class Home {
                             adminMenu();
                             break;
                         case 2:
-//                            method for reseting password to lastname
                             Home.userLogin();
                             break;
                     }

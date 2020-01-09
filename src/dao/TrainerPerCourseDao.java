@@ -26,7 +26,7 @@ import utils.DBUtils;
  */
 public class TrainerPerCourseDao {
 
-    public static ArrayList<Trainer> getTrainersPerCourse() {
+    public static ArrayList<Trainer> getTrainersPerCourse() throws ParseException {
         CourseDao.getAllCourses();
         System.out.println("For which course you want to see a list of trainers?");
         CourseDao.checkIfCourseExists();
@@ -84,7 +84,7 @@ public class TrainerPerCourseDao {
 
     }
 
-    public static void createTrainerPerCourse() {
+    public static void createTrainerPerCourse() throws ParseException {
         Scanner sc = new Scanner(System.in);
         System.err.println("LIST OF TRAINERS: " + "\n");
         TrainerDao.getAllTrainers();
@@ -147,7 +147,7 @@ public class TrainerPerCourseDao {
         }
     }
 
-    public static void deleteTrainerPerCourse() {
+    public static void deleteTrainerPerCourse() throws ParseException {
         Scanner sc = new Scanner(System.in);
         getTrainersPerCourse();
         int course_id = CourseDao.course_id;
@@ -212,13 +212,16 @@ public class TrainerPerCourseDao {
         try {
             pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery(sql);
-
+           
             while (rs.next()) {
                 String title = rs.getString(1);
                 System.err.println("COURSE: " + title);
             }
+            
+                
         } catch (SQLException ex) {
             Logger.getLogger(TrainerPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
+            
         } finally {
 
             try {
@@ -235,7 +238,7 @@ public class TrainerPerCourseDao {
         return "";
     }
 
-    public static void seeStudentsSubmittedAssignmentsPerCourse() {
+    public static void seeStudentsSubmittedAssignmentsPerCourse() throws ParseException {
         Scanner sc = new Scanner(System.in);
         System.out.println("CHOOSE COURSE");
         CourseDao.checkIfCourseExists();
@@ -283,7 +286,7 @@ public class TrainerPerCourseDao {
 
     }
 
-    public static void markAssignments() {
+    public static void markAssignments() throws ParseException {
         Scanner sc = new Scanner (System.in);
         seeStudentsSubmittedAssignmentsPerCourse();
         System.out.println("CHOOSE STUDENT: ");

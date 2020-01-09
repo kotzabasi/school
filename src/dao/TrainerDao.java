@@ -552,40 +552,8 @@ public class TrainerDao {
         }
     }
 
-//    public static void showTrainerCourses(int trainer_id) {
-//        Connection con = DBUtils.getConnection();
-//        PreparedStatement pst = null;
-//        String sql = "select title from course inner join trainer_per_course on "
-//                + "trainer_per_course.course_id=course.course_id where \n"
-//                + "trainer_per_course.trainer_id=" + trainer_id;
-//        System.err.println("COURSES ARE ENROLLED:");
-//
-//        try {
-//            pst = con.prepareStatement(sql);
-//            ResultSet rs = pst.executeQuery();
-//            while (rs.next()) {
-//                CourseDao.title = rs.getString("title");
-//                System.out.println(CourseDao.title);
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(TrainerDao.class.getName()).log(Level.SEVERE, null, ex);
-//        } finally {
-//            try {
-//                pst.close();
-//            } catch (SQLException ex) {
-//                Logger.getLogger(TrainerDao.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//            try {
-//                con.close();
-//            } catch (SQLException ex) {
-//                Logger.getLogger(TrainerDao.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//
-//        }
-//    }
 
     public static ArrayList<Student> getAllStudentsPerCourse() {
-
         System.out.println("For which course you want to see a list of students?");
         CourseDao.checkIfCourseExists();
         String title = CourseDao.title;
