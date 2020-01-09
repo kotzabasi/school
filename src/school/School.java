@@ -5,15 +5,10 @@
  */
 package school;
 
-
-import com.sun.jndi.toolkit.ctx.HeadTail;
-import dao.AssignmentPerStudentDao;
 import dao.AssignmentsPerCourseDao;
-import dao.CourseDao;
-import dao.StudentDao;
 import dao.StudentPerCourseDao;
-import dao.TrainerPerCourseDao;
 import java.text.ParseException;
+import java.util.Scanner;
 import menus.Home;
 import model.StudentPerCourse;
 
@@ -27,11 +22,8 @@ public class School {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws ParseException {
-       Home.trainerMenu();
-
+      Home.studentMenu();
 
     }
-    
-                
-    }
 
+}

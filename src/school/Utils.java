@@ -23,39 +23,6 @@ import java.util.concurrent.TimeUnit;
  */
 public class Utils {
 
-//    public static boolean isInteger(String s, int radix) {
-//        if (s.isEmpty()) {
-//            return false;
-//        }
-//        for (int i = 0; i < s.length(); i++) {
-//            if (i == 0 && s.charAt(i) == '-') {
-//                if (s.length() == 1) {
-//                    return false;
-//                } else {
-//                    continue;
-//                }
-//            }
-//            if (Character.digit(s.charAt(i), radix) < 0) {
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
-//    public static void enterKeyText(String line) {
-//
-//        if (line.length() == 0) {
-//            System.out.println("You didn't enter anything");
-//        } else {
-//            System.out.println("You entered: " + line);
-//        }
-//    }
-//    public static void enterInt(Object obj) {
-//        if (obj instanceof Integer) {
-//            System.out.println("success");
-//        } else {
-//            System.out.println("failed");
-//        }
-//    }
     public static List<Date> getDatesBetweenUsingJava7(
             Date startDate, Date endDate) {
         List<Date> datesInRange = new ArrayList<>();
@@ -138,26 +105,6 @@ public class Utils {
         return dates;
     }
 
-//    public static String writeDate() {
-//        Scanner sc = new Scanner(System.in);
-//        String inputS = sc.nextLine();
-//        boolean input = true;
-//        while (input) {
-//            try {
-//                Date start1 = new SimpleDateFormat("dd/MM/yyyy").parse(inputS);
-//                break;
-//            } catch (ParseException ex) {
-//                System.err.println("WRONG INPUT, TRY AGAIN: ");
-//                inputS = sc.nextLine();
-//
-//            }
-//
-//            System.out.println(inputS);
-//            break;
-//
-//        }
-//        return inputS;
-//    }
     public static String sumbitted(boolean submitted) {
         String result = submitted ? "YES" : "NO";
 
@@ -219,7 +166,8 @@ public class Utils {
         }
         return dif;
     }
-    public static Timestamp addTime (Timestamp t){
+
+    public static Timestamp addTime(Timestamp t) {
         Timestamp t2 = null;
         try {
             t2 = new Timestamp(t.getTime() + (1000 * 60 * 60 * 2));
@@ -228,6 +176,5 @@ public class Utils {
         }
         return t2;
     }
-        
-    }
 
+}

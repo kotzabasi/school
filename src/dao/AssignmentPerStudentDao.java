@@ -101,7 +101,7 @@ public class AssignmentPerStudentDao {
             }
         }
         if (bool) {
-            System.out.println("THERE ARE NO ASSIGNMENTS YET!");
+            System.err.println("THERE ARE NO ASSIGNMENTS YET!");
             try {
                 Home.subMenu();
             } catch (ParseException ex) {
@@ -175,12 +175,8 @@ public class AssignmentPerStudentDao {
         AssignmentPerStudentDao.showStudentsByAssignmentId(assignment_id);
 
         System.out.println("ARE YOU SURE?");
-        String answer1 = sc.nextLine().toLowerCase();
+        String answer1 = Utils.answerYesOrNo(sc.nextLine());
 
-        while (!answer1.equalsIgnoreCase("yes") && !answer1.equalsIgnoreCase("no")) {
-            System.out.println("Please answer with yes or no");
-            answer1 = sc.nextLine().toLowerCase();
-        }
         if (answer1.equalsIgnoreCase("yes")) {
             AssignmentPerStudentDao.assignAssignmentToStudent(assignment_id, student_id);
         } else {
@@ -200,7 +196,8 @@ public class AssignmentPerStudentDao {
                 + "and assignment_per_student.student_id=student.student_id inner join assignments_per_course on assignments_per_course.course_id=course.course_id\n"
                 + "and assignments_per_course.assignment_id=assignment.assignment_id\n"
                 + "inner join student_per_course on student_per_course.student_id=student.student_id and student_per_course.course_id=course.course_id\n"
-                + "order by last_name;";
+                +" or student_per_course.secondcourse_id=course.course_id"
+                + " order by last_name;";
         try {
             pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery(sql);

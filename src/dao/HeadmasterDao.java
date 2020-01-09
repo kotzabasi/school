@@ -87,12 +87,7 @@ public class HeadmasterDao {
         AssignmentDao.fetchAssignmentId(AssignmentDao.title);
 
         System.out.println("Are you sure? - please answer with yes or no");
-        String answerDelete = sc.nextLine().toLowerCase();
-         while (!answerDelete.equalsIgnoreCase("yes") && !answerDelete.equalsIgnoreCase("no")) {
-                System.out.println("Please answer with yes or no");
-                answerDelete = sc.nextLine().toLowerCase();
-            }
-       
+        String answerDelete = school.Utils.answerYesOrNo(sc.nextLine());
         if (answerDelete.equalsIgnoreCase("yes")) {
             AssignmentPerStudentDao.deleteAssignmentPerStudent(AssignmentDao.assignment_id, student_id);
         } else if (answerDelete.equalsIgnoreCase("no")) {

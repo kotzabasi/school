@@ -498,7 +498,7 @@ public class StudentPerCourseDao {
         PreparedStatement pst = null;
         String sql = "select student.student_id, first_name,last_name from student inner join student_per_course on "
                 + "student_per_course.student_id=student.student_id\n"
-                + "where student_per_course.course_id=" + course_id;
+                + "where student_per_course.course_id=" + course_id+" or student_per_course.secondcourse_id="+course_id;
         System.err.println("STUDENTS WHO ARE ENROLLED IN THIS COURSE:" + "\n");
         try {
             pst = con.prepareStatement(sql);

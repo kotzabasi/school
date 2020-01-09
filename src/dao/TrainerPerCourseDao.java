@@ -294,11 +294,12 @@ public class TrainerPerCourseDao {
         System.out.println("CHOOSE ASSIGNMENT: ");
         AssignmentDao.checkIfAssignmentExists();
         fetchOralAndTotalMark();
-        System.out.println("WOULD YOU LIKE TO SET ORAL MARK OR TOTAL MARK?");
-        System.out.println("PLEASE TYPE ORAL OR TOTAL");
+        System.out.println("WOULD YOU LIKE TO SET ORAL MARK,TOTAL MARK OR BOTH?");
+        System.out.println("PLEASE TYPE ORAL,TOTAL OR BOTH");
         String answer=Utils.notNull(sc.nextLine().toLowerCase());
-        while(!answer.equalsIgnoreCase("total") && !answer.equalsIgnoreCase("oral")){
-            System.out.println("Please type ORAL or TOTAL");
+        while(!answer.equalsIgnoreCase("total") && !answer.equalsIgnoreCase("oral")
+        && !answer.equalsIgnoreCase("both")){
+            System.out.println("Please type ORAL,TOTAL or BOTH");
             answer=sc.nextLine().toLowerCase();
         }
         switch(answer){
@@ -309,6 +310,14 @@ public class TrainerPerCourseDao {
                 case "total":
                     AssignmentPerStudentDao.updateTotalMark();
                     Home.trainerSubmenu();
+                    break;
+                case "both":
+                    System.out.println("ORAL MARK:");
+                    AssignmentPerStudentDao.updateOralMark();
+                    System.out.println("TOTAL MARK: ");
+                    AssignmentPerStudentDao.updateTotalMark();
+                    Home.trainerSubmenu();
+                    
                     break;
         }
     }

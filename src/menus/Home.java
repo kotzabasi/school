@@ -43,7 +43,6 @@ public class Home {
     }
 
     public static void studentMenu() throws ParseException {
-        System.err.println(current);
         Scanner sc = new Scanner(System.in);
         System.err.println("INSERTING STUDENT MENU....");
         System.out.println("PLEASE TYPE YOUR NAME");
@@ -119,13 +118,14 @@ public class Home {
         System.out.println("");
         System.out.println("MAIN MENU:" + "\n"
                 + "1.View students of your courses" + "\n"
-                + "2.Mark assignments" + "\n" + "3.Exit" + "\n" + "PLEASE CHOOSE A NUMBER FROM 1 to 3: ");
+                + "2.Mark assignments" + "\n" + "3.Assign an assignment to a student"
+                + "\n" + "4.Exit" + "\n" + "PLEASE CHOOSE A NUMBER FROM 1 to 4: ");
         int choice = 0;
         do {
             try {
                 choice = sc.nextInt();
-                if ((choice < 1) || (choice > 3)) {
-                    System.err.print("You must enter a number from 1 to 3!");
+                if ((choice < 1) || (choice > 4)) {
+                    System.err.print("You must enter a number from 1 to 4!");
 
                 } else {
                     switch (choice) {
@@ -136,10 +136,15 @@ public class Home {
                             break;
                         case 2:
                             TrainerPerCourseDao.markAssignments();
-                            trainerMenu();
+                            trainerSubmenu();
                             break;
                         case 3:
+                            TrainerDao.assignAssignment();
+                            trainerSubmenu();
+                            break;
+                        case 4:
                             userLogin();
+                            break;
                     }
 
                 }
@@ -149,7 +154,6 @@ public class Home {
 
             }
         } while (sc.hasNext());
-        
 
     }
 
@@ -361,7 +365,6 @@ public class Home {
                                                 headmasterMenu();
                                                 break;
                                             case 4:
-                                                StudentPerCourseDao.deleteStudentPerCourse();
                                                 headmasterMenu();
                                                 break;
                                         }
@@ -413,7 +416,7 @@ public class Home {
                             } while (sc.hasNext());
                         case 7:
                             System.out.println("ASSIGNMENTS PER COURSE MENU:" + "\n" + "1.See assignment per course" + "\n" + "2.See assignment per student(per course)" + "\n" + "3.Assign an assignment to a course" + "\n"
-                                    + "4.Assign or update an assignment to student(per course)" + "\n"
+                                    + "4.Assign an assignment to a student(per course)" + "\n"
                                     + "5.Delete assignment per course" + "\n" + "6.Delete assignment per student(per course)" + "\n" + "7.Exit" + "\n"
                                     + "PLEASE CHOOSE A NUMBER FROM 1 TO 7: ");
 

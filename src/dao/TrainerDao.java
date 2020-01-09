@@ -82,19 +82,19 @@ public class TrainerDao {
         String user = "INSERT into user (username,password,role) VALUES (?,?,'trainer')";
         Trainer t = new Trainer();
         User u = new User();
-         Scanner sc = new Scanner(System.in);
-            checkCreatedTrainer(firstname, lastname);
+        Scanner sc = new Scanner(System.in);
+        checkCreatedTrainer(firstname, lastname);
 
         try {
             con.setAutoCommit(false);
             insertTrainer = con.prepareStatement(trainer);
             insertUser = con.prepareStatement(user);
-            
+
             t.setFirstname(firstname);
             t.setLastname(lastname);
             u.setUsername(lastname);
             u.setPassword(lastname);
-            
+
             System.out.println("Subject:");
             String subject = Utils.notNull(sc.nextLine());
             t.setSubject(subject);
@@ -552,7 +552,6 @@ public class TrainerDao {
         }
     }
 
-
     public static ArrayList<Student> getAllStudentsPerCourse() {
         System.out.println("For which course you want to see a list of students?");
         CourseDao.checkIfCourseExists();
@@ -644,5 +643,38 @@ public class TrainerDao {
 
         }
 
+    }
+
+    public static void assignAssignment() throws ParseException {
+        Scanner sc = new Scanner(System.in);
+        CourseDao.checkIfCourseExists();
+        StudentPerCourseDao.showStudentsByCourseId(CourseDao.course_id);
+        AssignmentsPerCourseDao.showAssignmentForOneCourse(CourseDao.course_id);
+        System.out.println("SELECT A STUDENT TO ASSIGN AN ASSIGNMENT. " + "\n"
+                + "TYPE THE NAME OF THE STUDENT:");
+
+        StudentDao.checkIfStudentExists();
+        String first_name = StudentDao.first_name;
+        String last_name = StudentDao.last_name;
+        int student_id = StudentDao.fetchStudentId(first_name, last_name);
+        System.out.println("\n");
+        System.err.println("CHOOSE WHICH ASSIGNMENT YOU WILL ASSIGN");
+        AssignmentDao.checkIfAssignmentExists();
+        String titlea = AssignmentDao.title;
+        int assignment_id = AssignmentDao.fetchAssignmentId(titlea);
+        AssignmentPerStudentDao.showStudentsByAssignmentId(assignment_id);
+
+        System.out.println("ARE YOU SURE?");
+        String answer1 = Utils.answerYesOrNo(sc.nextLine());
+
+        if (answer1.equalsIgnoreCase("yes")) {
+            AssignmentPerStudentDao.assignAssignmentToStudent(assignment_id, student_id);
+        } else {
+            try {
+                Home.headmasterMenu();
+            } catch (ParseException ex) {
+                Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 }
