@@ -31,6 +31,8 @@ public class AssignmentDao {
     public static int assignment_id;
     public static String title;
 
+//    list of  assignments
+    
     public static ArrayList<Assignment> getAssignments() {
         ArrayList<Assignment> list = new ArrayList<>();
         Connection con = DBUtils.getConnection();
@@ -80,6 +82,7 @@ public class AssignmentDao {
         return list;
 
     }
+//    show assignment information by assignment_id
 
     public static void showByAssignmentId() {
         Connection con = DBUtils.getConnection();
@@ -276,15 +279,13 @@ public class AssignmentDao {
                         pst.close();
 
                     } catch (SQLException ex) {
-                        Logger.getLogger(AssignmentDao.class
-                                .getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     try {
                         con.close();
 
                     } catch (SQLException ex) {
-                        Logger.getLogger(AssignmentDao.class
-                                .getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
                 break;
@@ -419,7 +420,6 @@ public class AssignmentDao {
             System.out.println("Please type the new submission date of the assignment (yyyy-mm-dd hh:mm:ss)");
             String subDate = sc.nextLine();
             Timestamp submission_date = Timestamp.valueOf(subDate);
-
             Connection con = DBUtils.getConnection();
             PreparedStatement pst = null;
             String sql = "UPDATE assignment SET submission_date='" + submission_date + "'" + "WHERE assignment_id='" + assignment_id + "'";
@@ -430,8 +430,7 @@ public class AssignmentDao {
                 change = true;
 
             } catch (SQLException ex) {
-                Logger.getLogger(AssignmentDao.class
-                        .getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
                 change = false;
 
             } finally {
@@ -439,15 +438,13 @@ public class AssignmentDao {
                     pst.close();
 
                 } catch (SQLException ex) {
-                    Logger.getLogger(AssignmentDao.class
-                            .getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 try {
                     con.close();
 
                 } catch (SQLException ex) {
-                    Logger.getLogger(AssignmentDao.class
-                            .getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if (change) {
@@ -478,8 +475,7 @@ public class AssignmentDao {
                 change = true;
 
             } catch (SQLException ex) {
-                Logger.getLogger(AssignmentDao.class
-                        .getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
                 change = false;
 
             } finally {
@@ -487,15 +483,13 @@ public class AssignmentDao {
                     pst.close();
 
                 } catch (SQLException ex) {
-                    Logger.getLogger(AssignmentDao.class
-                            .getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 try {
                     con.close();
 
                 } catch (SQLException ex) {
-                    Logger.getLogger(AssignmentDao.class
-                            .getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(AssignmentDao.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if (change) {

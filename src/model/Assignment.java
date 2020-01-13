@@ -98,8 +98,8 @@ public class Assignment {
     public String toString(){
         return "TITLE: "+title+"\n"+
                 "Description: "+description_of_assignment+"\n"+
-                "Submission Date: "+Utils.substractTime(submission_date)+"\n"+
-                "Expiration Date: "+Utils.substractTime(expiration_date)+"\n"+
+                "Submission Date: "+Utils.subtractTime(submission_date)+"\n"+
+                "Expiration Date: "+Utils.subtractTime(expiration_date)+"\n"+
                 "Stream: "+stream+"\n";
     
 

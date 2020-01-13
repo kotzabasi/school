@@ -5,12 +5,10 @@
  */
 package school;
 
-import dao.AssignmentsPerCourseDao;
-import dao.StudentPerCourseDao;
+
 import java.text.ParseException;
-import java.util.Scanner;
 import menus.Home;
-import model.StudentPerCourse;
+
 
 /**
  *
@@ -20,9 +18,11 @@ public class School {
 
     /**
      * @param args the command line arguments
+     * @throws java.text.ParseException
      */
     public static void main(String[] args) throws ParseException {
-      Home.studentMenu();
+      Home.userLogin();
+             
 
     }
 

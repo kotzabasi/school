@@ -26,6 +26,8 @@ import java.util.Scanner;
  * @author liana
  */
 public class Home {
+    
+    //Home login page username & password the last name of the user (except admin, headmaster)
 
     public static String username;
     static Date current = new Date();
@@ -41,6 +43,7 @@ public class Home {
         UserDao.checkPassword();
 
     }
+    // Student menu: first name & last name required to open the submenu (in order to keep in memory student_id)
 
     public static void studentMenu() throws ParseException {
         Scanner sc = new Scanner(System.in);
@@ -55,7 +58,8 @@ public class Home {
         StudentPerCourseDao.showCourseEnrolled(student_id);
         subMenu();
     }
-
+//Student submenu
+    
     public static void subMenu() throws ParseException {
         Scanner sc = new Scanner(System.in);
         int student_id = StudentDao.student_id;
@@ -68,7 +72,7 @@ public class Home {
             try {
                 choice = sc.nextInt();
                 if ((choice < 1) || (choice > 4)) {
-                    System.err.print("You must enter a number from 1 to 5!");
+                    System.err.print("You must enter a number from 1 to 4!");
 
                 } else {
                     switch (choice) {
@@ -98,6 +102,7 @@ public class Home {
         } while (sc.hasNext());
 
     }
+//    trainer menu: first and last names are required to keep in memory trainer_id
 
     public static void trainerMenu() throws ParseException {
         Scanner sc = new Scanner(System.in);
@@ -112,6 +117,7 @@ public class Home {
         trainerSubmenu();
 
     }
+//    Trainer submenu
 
     public static void trainerSubmenu() throws ParseException {
         Scanner sc = new Scanner(System.in);
@@ -156,6 +162,7 @@ public class Home {
         } while (sc.hasNext());
 
     }
+//    Headmaster menu - no submenu is required
 
     public static void headmasterMenu() throws ParseException {
         Scanner sc = new Scanner(System.in);
@@ -528,6 +535,7 @@ public class Home {
             }
         } while (sc.hasNext());
     }
+//    admin menu
 
     public static void adminMenu() throws ParseException {
         Scanner sc = new Scanner(System.in);

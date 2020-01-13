@@ -32,6 +32,8 @@ public class CourseDao {
 
     public static int course_id;
     public static String title;
+    
+//    list of courses
 
     public static ArrayList<Course> getAllCourses() throws ParseException {
         ArrayList<Course> list = new ArrayList<Course>();
@@ -76,6 +78,7 @@ public class CourseDao {
         return list;
 
     }
+//    boolean field schedule = 0 or null (db table course)
 
     public static ArrayList<Course> getCoursesWithNoSchedule() {
         ArrayList<Course> list = new ArrayList<Course>();
@@ -119,6 +122,7 @@ public class CourseDao {
         return list;
 
     }
+//    boolean field schedule =1 (db table course)
 
     public static ArrayList<Course> getCoursesWithSchedule() {
         ArrayList<Course> list = new ArrayList<Course>();
@@ -162,6 +166,7 @@ public class CourseDao {
         return list;
 
     }
+//    ensouring correct input (course title)
 
     public static void checkIfCourseExists() {
         Connection con = DBUtils.getConnection();
@@ -197,7 +202,8 @@ public class CourseDao {
         }
 
     }
-
+//show course information by course_id
+    
     public static void showByCourseId(int course_id) {
         Connection con = DBUtils.getConnection();
         PreparedStatement pst = null;
@@ -471,7 +477,8 @@ public class CourseDao {
         }
 
     }
-
+//when a schedule table has been created this method is used to update course table, schedule field, to 1
+    
     public static void updateCourseBooleanTrue(int course_id) {
         Connection con = DBUtils.getConnection();
         PreparedStatement pst = null;
@@ -497,6 +504,7 @@ public class CourseDao {
         }
 
     }
+    //when a schedule table has been created this method is used to update course table, schedule field, to 0
 
     public static void updateCourseBooleanFalse(int course_id) {
         Connection con = DBUtils.getConnection();
@@ -742,6 +750,9 @@ public class CourseDao {
         } while (sc.hasNext());
 
     }
+    
+    
+//    this method is used to avoid inserting a course title with different course_id
 
     public static void checkByTitleAndId() {
         Scanner sc = new Scanner(System.in);

@@ -20,11 +20,11 @@ import utils.DBUtils;
 public class User {
 
     public int user_id;
-    private  String username;
-    private  String password;
-    private  int student_id;
-    private   int trainer_id;
-    private  String role;
+    private String username;
+    private String password;
+    private int student_id;
+    private int trainer_id;
+    private String role;
 
     public User(int user_id, String username, String password, int student_id, int trainer_id, String role) {
         this.user_id = user_id;
@@ -35,18 +35,16 @@ public class User {
         this.role = role;
     }
 
-  
-    public User(){
-        
+    public User() {
+
     }
 
-    public User(int student_id, int trainer_id, String role,String password) {
+    public User(int student_id, int trainer_id, String role, String password) {
         this.student_id = student_id;
         this.trainer_id = trainer_id;
         this.role = role;
-        this.password=password;
+        this.password = password;
     }
-    
 
     public int getUser_id() {
         return user_id;
@@ -95,22 +93,15 @@ public class User {
     public void setRole(String role) {
         this.role = role;
     }
+
     @Override
-    public String toString(){
-        return "USER ID:"+user_id+"\n"+
-                "USERNAME:"+username+"\n"+
-                "ROLE: "+role+"\n";
-                
+    public String toString() {
+        return "USER ID: " + user_id + "\n"
+                + "USERNAME: " + username + "\n"
+                + "STUDENT ID: " + student_id + "\n"
+                + "TRAINER ID: " + trainer_id + "\n"
+                + "ROLE: " + role + "\n";
+
     }
-  
-    
-
-    
-    
-  
-
-   
-
-    
 
 }

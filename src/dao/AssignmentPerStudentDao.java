@@ -79,8 +79,8 @@ public class AssignmentPerStudentDao {
                 Utils.getDaysBetweenDates(expiration_date);
                 boolean submitted = rs.getBoolean("submitted");
                 System.out.println("\n");
-                System.out.println("ASSIGNMENT: " + title + "\n" + "SUBMISSION DATE: " + Utils.substractTime(submission_date) + "\n"
-                        + "EXPIRATION DATE: " + Utils.substractTime(expiration_date) + "\n" + "SUBMITTED: "
+                System.out.println("ASSIGNMENT: " + title + "\n" + "SUBMISSION DATE: " + Utils.subtractTime(submission_date) + "\n"
+                        + "EXPIRATION DATE: " + Utils.subtractTime(expiration_date) + "\n" + "SUBMITTED: "
                         + Utils.sumbitted(submitted) + "\n");
                 bool = rs.wasNull();
 

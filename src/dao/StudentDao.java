@@ -32,6 +32,8 @@ public class StudentDao {
     static LocalDate date_of_birth;
     static int enroll_id;
 
+//    list of students
+    
     public static ArrayList<Student> getAllStudents() {
         ArrayList<Student> list = new ArrayList<Student>();
         Connection con = DBUtils.getConnection();
@@ -53,9 +55,12 @@ public class StudentDao {
                 Student student = new Student(student_id, firstname, lastname, date_of_birth, tuition_fees, enroll_id);
 
                 list.add(student);
-                System.out.println(student.toString());
+                System.out.println(student.toString()+"\n");
+//                for showing students' courses
                 StudentPerCourseDao.showCourseEnrolled(student_id);
                 System.out.println("\n");
+               
+
 
             }
         } catch (SQLException ex) {
@@ -77,7 +82,8 @@ public class StudentDao {
         return list;
 
     }
-
+//insert a new student (and a new user)
+    
     public static void insertStudent() {
         Connection con = DBUtils.getConnection();
         PreparedStatement st = null;
@@ -184,6 +190,7 @@ public class StudentDao {
         }
         return student_id;
     }
+//    set student_id to user table
 
     public static void setStudentIdToUser(int student_id) {
         Connection con = DBUtils.getConnection();
@@ -211,6 +218,8 @@ public class StudentDao {
         }
 
     }
+    
+//    when a student per course is created, student table is updated with the student per course enroll id
 
     public static void insertEnrollId(int enroll_id) {
 
@@ -240,6 +249,7 @@ public class StudentDao {
         }
 
     }
+//    when a student per course is deleted, student table is updated, erasing enroll id
 
     public static void deleteEnrollId(int enroll_id) {
         Connection con = DBUtils.getConnection();
@@ -272,6 +282,7 @@ public class StudentDao {
         }
 
     }
+//    delete student AND user
 
     public static void deleteStudent() {
         getAllStudents();
@@ -338,6 +349,7 @@ public class StudentDao {
         }
 
     }
+//    ensuring correct input for student name
 
     public static void checkIfStudentExists() {
 
@@ -384,6 +396,7 @@ public class StudentDao {
         }
 
     }
+//    avoiding duplicates (student)
 
     public static void checkCreatedStudent(String firstname, String lastname) {
         Connection con = DBUtils.getConnection();
@@ -428,6 +441,7 @@ public class StudentDao {
         }
 
     }
+//    avoiding incorrect mismatches
 
     public static void checkByIdAndLastname() {
 
@@ -590,7 +604,8 @@ public class StudentDao {
         }
 
     }
-
+//    fetch student information by student_id
+    
     public static void showByStudentId() {
         Connection con = DBUtils.getConnection();
         PreparedStatement pst = null;
@@ -626,6 +641,7 @@ public class StudentDao {
         }
 
     }
+//    update student last name and user username & password 
 
     public static void updateStudentLastName(Student student) {
         Scanner sc = new Scanner(System.in);
@@ -651,9 +667,11 @@ public class StudentDao {
             pstUserP.execute();
             con.commit();
             change = true;
+            
         } catch (SQLException ex) {
             Logger.getLogger(StudentDao.class.getName()).log(Level.SEVERE, null, ex);
             change = false;
+            
         } finally {
             try {
                 pstStudent.close();
@@ -764,6 +782,8 @@ public class StudentDao {
         }
     }
 
+//    get students with no enroll_id 
+    
     public static ArrayList<Student> studentsNotEnrolled() {
         ArrayList<Student> list = new ArrayList<Student>();
         Connection con = DBUtils.getConnection();
@@ -812,6 +832,7 @@ public class StudentDao {
         return list;
 
     }
+//    get students witn enroll_id
 
     public static ArrayList<Student> studentsEnrolled() {
         ArrayList<Student> list = new ArrayList<Student>();

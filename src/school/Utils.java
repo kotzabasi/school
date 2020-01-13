@@ -5,6 +5,7 @@
  */
 package school;
 
+import com.mysql.cj.util.StringUtils;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
@@ -23,26 +24,26 @@ import java.util.concurrent.TimeUnit;
  */
 public class Utils {
 
-    public static List<Date> getDatesBetweenUsingJava7(
-            Date startDate, Date endDate) {
-        List<Date> datesInRange = new ArrayList<>();
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(startDate);
-
-        Calendar endCalendar = new GregorianCalendar();
-        endCalendar.setTime(endDate);
-
-        while (calendar.before(endCalendar)) {
-            Date result = calendar.getTime();
-            datesInRange.add(result);
-            calendar.add(Calendar.DATE, 1);
-        }
-        for (Date date : datesInRange) {
-            System.out.println(date);
-
-        }
-        return datesInRange;
-    }
+//    public static List<Date> getDatesBetweenUsingJava7(
+//            Date startDate, Date endDate) {
+//        List<Date> datesInRange = new ArrayList<>();
+//        Calendar calendar = new GregorianCalendar();
+//        calendar.setTime(startDate);
+//
+//        Calendar endCalendar = new GregorianCalendar();
+//        endCalendar.setTime(endDate);
+//
+//        while (calendar.before(endCalendar)) {
+//            Date result = calendar.getTime();
+//            datesInRange.add(result);
+//            calendar.add(Calendar.DATE, 1);
+//        }
+//        for (Date date : datesInRange) {
+//            System.out.println(date);
+//
+//        }
+//        return datesInRange;
+//    }
 
     public static int onlyInteger() {
 
@@ -67,18 +68,20 @@ public class Utils {
 
     }
 
-    public static String notNull(String s) {
-        Scanner sc = new Scanner(System.in);
-        while (s.isEmpty() || s.matches(".*\\d.*")) {
-            System.err.println("Null values not allowed!"
-                    + "\n" + "Please try again:" + "\n");
-            s = sc.nextLine();
+//    public static String notNull(String s) {
+//        Scanner sc = new Scanner(System.in);
+//        while (s.isEmpty() || s.matches(".*\\d.*")) {
+//            System.err.println("Null values not allowed!"
+//                    + "\n" + "Please try again:" + "\n");
+//            s = sc.nextLine();
+//
+//        }
+//
+//        return s;
+//    }
 
-        }
-
-        return s;
-    }
-
+//    inserting a range of dates to schedule table
+    
     public static List<String> getDates(
             Date startDate, Date endDate) {
         List<Date> datesInRange = new ArrayList<>();
@@ -110,7 +113,8 @@ public class Utils {
 
         return result;
     }
-
+// a simple input format tranforms to another, more complex format
+    
     public static String changeFormatString(String s) {
         Scanner sc = new Scanner(System.in);
         String s1 = null;
@@ -139,8 +143,9 @@ public class Utils {
         }
         return s;
     }
-
-    public static Timestamp substractTime(Timestamp t) {
+// database show correct time but java don't - this method solves this problem
+    
+    public static Timestamp subtractTime(Timestamp t) {
 
         Timestamp t2 = null;
         try {
@@ -150,6 +155,7 @@ public class Utils {
         }
         return t2;
     }
+//    for Student Menu - counting days between current date and expiration date (of assingment)
 
     public static long getDaysBetweenDates(Timestamp ts) {
         long dif = 0;
@@ -166,7 +172,8 @@ public class Utils {
         }
         return dif;
     }
-
+// database show correct time but java don't - this method solves this problem
+    
     public static Timestamp addTime(Timestamp t) {
         Timestamp t2 = null;
         try {
@@ -175,6 +182,17 @@ public class Utils {
             System.out.println();
         }
         return t2;
+    }
+       public static String notNull(String s) {
+        Scanner sc = new Scanner(System.in);
+        while (StringUtils.isNullOrEmpty(s)) {
+            System.err.println("Null values not allowed!"
+                    + "\n" + "Please try again:" + "\n");
+            s = sc.nextLine();
+
+        }
+
+        return s;
     }
 
 }

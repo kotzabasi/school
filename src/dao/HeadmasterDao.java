@@ -9,7 +9,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +20,8 @@ import utils.DBUtils;
  * @author liana
  */
 public class HeadmasterDao {
+    
+//    first course is a new insert, second course is a field update (same enroll_id)
 
     public static void setSecondcourse(int enroll_id) throws ParseException {
         Scanner sc = new Scanner(System.in);
@@ -33,11 +34,7 @@ public class HeadmasterDao {
         System.out.println("Are  you sure you want to enroll this student in " + title + "?" + "\n");
         System.out.println("IF A STUDENT HAS TWO COURSES ALREADY YOU WILL CHANGE THE SECOND ONE");
         System.out.println("Please answer with yes or no" + "\n");
-        String answer = sc.nextLine().toLowerCase();
-        while (!answer.equalsIgnoreCase("yes") && !answer.equalsIgnoreCase("no")) {
-            System.out.println("Please answer with yes or no");
-            answer = sc.nextLine().toLowerCase();
-        }
+        String answer = school.Utils.answerYesOrNo(sc.nextLine());
         boolean change = false;
         switch (answer) {
             case "yes":
@@ -75,7 +72,8 @@ public class HeadmasterDao {
         }
         Home.headmasterMenu();
     }
-
+//delete Assignment Per Student Per course
+    
     public static void deleteAssPerStPerCour() throws ParseException {
         Scanner sc = new Scanner(System.in);
         AssignmentPerStudentDao.showAssignmentPerStudentPerCourse();

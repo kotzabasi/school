@@ -28,6 +28,8 @@ public class TrainerDao {
     public static int trainer_id;
     public static String firstname;
     public static String lastname;
+    
+//    a list of trainers and their courses
 
     public static ArrayList<Trainer> getAllTrainers() {
         ArrayList<Trainer> list = new ArrayList<>();
@@ -49,6 +51,7 @@ public class TrainerDao {
                 Trainer trainer = new Trainer(trainer_id, first_name, last_name, subject);
                 list.add(trainer);
                 System.out.println(trainer.toString());
+//                courses of trainers
                 TrainerPerCourseDao.showCoursePerTrainer(rs.getInt("trainer_id"));
                 System.out.println();
 
@@ -72,7 +75,8 @@ public class TrainerDao {
         return list;
 
     }
-
+//insert a new trainer (and user)
+    
     public static void insertTrainer() {
         Connection con = DBUtils.getConnection();
         PreparedStatement insertTrainer = null;
@@ -112,7 +116,6 @@ public class TrainerDao {
 
             System.err.println("YOU HAVE INSERTED A TRAINER:");
             System.out.println("\n");
-            System.out.println(t.toString());
 
         } catch (SQLException ex) {
             Logger.getLogger(TrainerDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -175,6 +178,7 @@ public class TrainerDao {
             }
         }
     }
+    
 
     public static void setTrainerIdToUser(int trainer_id) {
         Connection con = DBUtils.getConnection();
@@ -202,7 +206,8 @@ public class TrainerDao {
         }
 
     }
-
+//delete trainer (and user)
+    
     public static void deleteTrainer() {
         getAllTrainers();
         System.out.println("Please type the first and the last name of the entry you want to delete");
@@ -221,9 +226,8 @@ public class TrainerDao {
             deleteUser = con.prepareStatement(user);
             Scanner sc = new Scanner(System.in);
             System.out.println("Please type the trainer_id if  you want to delete this trainer");
-            trainer_id = sc.nextInt();
-            checkByIdAndLastname();
-
+            trainer_id =   checkByIdAndLastname();
+           
             deleteTrainer.setInt(1, trainer_id);
             deleteUser.setInt(1, trainer_id);
             deleteTrainer.execute();
@@ -253,7 +257,8 @@ public class TrainerDao {
         }
 
     }
-
+//get trainer's information by trainer_id
+    
     public static void showByTrainerId() {
         Connection con = DBUtils.getConnection();
         PreparedStatement pst = null;
@@ -354,7 +359,8 @@ public class TrainerDao {
         }
 
     }
-
+// last name is used as user password- update lastname (trainer) and username & password (user)
+    
     public static void updateTrainerLastName(Trainer trainer) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please type the new last name");
@@ -515,7 +521,7 @@ public class TrainerDao {
 
     }
 
-    public static void checkByIdAndLastname() {
+    public static int checkByIdAndLastname() {
 
         Scanner sc = new Scanner(System.in);
         Connection con = DBUtils.getConnection();
@@ -550,8 +556,11 @@ public class TrainerDao {
             }
 
         }
+        return trainer_id;
     }
-
+    
+//identical with StudentPerCourseDao, except for the first line (menu problem)
+    
     public static ArrayList<Student> getAllStudentsPerCourse() {
         System.out.println("For which course you want to see a list of students?");
         CourseDao.checkIfCourseExists();
@@ -567,7 +576,6 @@ public class TrainerDao {
             pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery(sql);
             while (rs.next()) {
-
                 Student student = new Student();
                 student.setStudent_id(rs.getInt(1));
                 int student_id = rs.getInt(1);
@@ -604,6 +612,8 @@ public class TrainerDao {
 
     }
 
+//    to avoid duplicate trainer inputs
+    
     public static void checkCreatedTrainer(String firstname, String lastname) {
         Connection con = DBUtils.getConnection();
         Scanner sc = new Scanner(System.in);
@@ -644,6 +654,7 @@ public class TrainerDao {
         }
 
     }
+//    similar to assingAssignmentToStudent() of AssignmentPerStudentDao - this is for trainer menu
 
     public static void assignAssignment() throws ParseException {
         Scanner sc = new Scanner(System.in);

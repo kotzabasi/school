@@ -32,6 +32,8 @@ public class UserDao {
     static int user_id;
     public static String password;
 
+//    list of users
+    
     public static ArrayList<User> getAllUsers() {
         ArrayList<User> list = new ArrayList<>();
         Connection con = DBUtils.getConnection();
@@ -71,6 +73,7 @@ public class UserDao {
         return list;
 
     }
+//    for error message when username input is incorrect
 
     public static String checkIfUsernameExists(String username) {
         Scanner sc = new Scanner(System.in);
@@ -109,6 +112,7 @@ public class UserDao {
         }
         return UserDao.username;
     }
+//    checking passord
 
     public static String checkPassword() throws ParseException {
         Scanner sc = new Scanner(System.in);
@@ -173,39 +177,42 @@ public class UserDao {
         return s;
 
     }
-
-    public static int findUserId(String username) {
-        Connection con = DBUtils.getConnection();
-        PreparedStatement pst = null;
-        String sql = "SELECT user_id FROM user WHERE username='" + username + "'";
-        try {
-            pst = con.prepareStatement(sql);
-            ResultSet rs = pst.executeQuery(sql);
-            while (rs.next()) {
-
-                user_id = rs.getInt("user_id");
-                System.out.println("USER ID " + user_id);
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-
-            try {
-                pst.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try {
-                con.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return user_id;
-    }
-
-    public static void resetPassToDefault() {
-
-    }
+    
+// I DID'T USE IT - NO SETTING PASSWORD MENU FOR USER - IT IS NOT REQUIRED FROM THE ASSIGNMENT
+//
+//    public static int findUserId(String username) {
+//        Connection con = DBUtils.getConnection();
+//        PreparedStatement pst = null;
+//        String sql = "SELECT user_id FROM user WHERE username='" + username + "'";
+//        try {
+//            pst = con.prepareStatement(sql);
+//            ResultSet rs = pst.executeQuery(sql);
+//            while (rs.next()) {
+//
+//                user_id = rs.getInt("user_id");
+//                System.out.println("USER ID " + user_id);
+//            }
+//
+//        } catch (SQLException ex) {
+//            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+//        } finally {
+//
+//            try {
+//                pst.close();
+//            } catch (SQLException ex) {
+//                Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//            try {
+//                con.close();
+//            } catch (SQLException ex) {
+//                Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+//        return user_id;
+//    }
+//
+//    public static void resetPassToDefault() {
+//
+//    }
+    
 }
