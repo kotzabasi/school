@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import menus.HeadmasterMenu;
 import menus.Home;
 import model.Assignment;
 import model.AssignmentsPerCourse;
@@ -88,7 +89,7 @@ public class AssignmentsPerCourseDao {
         }
         if (bool) {
             System.err.println("THERE ARE NO ASSIGNMENTS YET!");
-            Home.headmasterMenu();
+            HeadmasterMenu.headmasterMenu();
         }
 
         return list;
@@ -148,7 +149,8 @@ public class AssignmentsPerCourseDao {
 
         }
     }
-
+//Students who have a particular assignment
+    
     public static void studentPerAssignment() throws ParseException {
         boolean bool = true;
         Connection con = DBUtils.getConnection();
@@ -188,10 +190,11 @@ public class AssignmentsPerCourseDao {
         }
         if (bool) {
             System.err.println("THERE ARE NO STUDENTS WHO HAVE BEEN ASSIGNED THIS!");
-            Home.headmasterMenu();
+            HeadmasterMenu.headmasterMenu();
         }
 
     }
+//    Assignments per course
 
     public static ArrayList<Assignment> showAssignmentForOneCourse(int course_id) throws ParseException {
 
@@ -244,7 +247,7 @@ public class AssignmentsPerCourseDao {
         }
         if (bool) {
             System.out.println("THERE ARE NO ASSIGNMENTS YET!"+"\n");
-            Home.headmasterMenu();
+            HeadmasterMenu.headmasterMenu();
 
         }
         return list;

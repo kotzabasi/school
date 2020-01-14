@@ -12,6 +12,7 @@ import java.text.ParseException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import menus.HeadmasterMenu;
 import menus.Home;
 import utils.DBUtils;
 
@@ -70,7 +71,7 @@ public class HeadmasterDao {
             System.err.println("SUCCESS!");
             System.out.println("\n");
         }
-        Home.headmasterMenu();
+        HeadmasterMenu.headmasterMenu();
     }
 //delete Assignment Per Student Per course
     
@@ -89,7 +90,7 @@ public class HeadmasterDao {
         if (answerDelete.equalsIgnoreCase("yes")) {
             AssignmentPerStudentDao.deleteAssignmentPerStudent(AssignmentDao.assignment_id, student_id);
         } else if (answerDelete.equalsIgnoreCase("no")) {
-            Home.headmasterMenu();
+            HeadmasterMenu.headmasterMenu();
         } else {
             System.out.println("You have to answer with yes or no");
         }

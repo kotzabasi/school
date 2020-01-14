@@ -18,6 +18,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jdk.nashorn.internal.ir.BreakNode;
+import menus.HeadmasterMenu;
 import menus.Home;
 import model.Assignment;
 import utils.DBUtils;
@@ -178,7 +179,7 @@ public class AssignmentDao {
                     result = true;
                     break;
                 case "no":
-                    Home.headmasterMenu();
+                    HeadmasterMenu.headmasterMenu();
                     break;
             }
         } catch (SQLException ex) {
@@ -603,26 +604,26 @@ public class AssignmentDao {
                     switch (fieldUpdate) {
                         case 1:
                             updateAssignmentTitle();
-                            Home.headmasterMenu();
+                            HeadmasterMenu.headmasterMenu();
                             break;
                         case 2:
                             updateAssignmentDescription();
-                            Home.headmasterMenu();
+                            HeadmasterMenu.headmasterMenu();
                             break;
                         case 3:
                             updateAssignmentSubDate();
-                            Home.headmasterMenu();
+                            HeadmasterMenu.headmasterMenu();
                             break;
                         case 4:
                             updateAssignmentExpDate();
-                            Home.headmasterMenu();
+                            HeadmasterMenu.headmasterMenu();
                             break;
                         case 5:
                             updateAssignmentStream();
-                            Home.headmasterMenu();
+                            HeadmasterMenu.headmasterMenu();
                             break;
                         case 6:
-                            Home.headmasterMenu();
+                            HeadmasterMenu.headmasterMenu();
                             break;
 
                     }

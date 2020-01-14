@@ -16,7 +16,8 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import menus.Home;
+import menus.HeadmasterMenu;
+import menus.StudentMenu;
 import model.Schedule;
 import model.Student;
 import model.StudentPerCourse;
@@ -33,6 +34,7 @@ public class StudentPerCourseDao {
     public static int enroll_id;
     static int secondCourse;
 
+//    List of students (selecting course first)
     public static ArrayList<Student> getAllStudentsPerCourse() throws ParseException {
 
         CourseDao.getAllCourses();
@@ -85,7 +87,7 @@ public class StudentPerCourseDao {
         if (list.isEmpty()) {
             System.out.println("THERE ARE NO STUDENTS IN THIS COURSE YET!" + "\n");
             try {
-                Home.headmasterMenu();
+                HeadmasterMenu.headmasterMenu();
             } catch (ParseException ex) {
                 Logger.getLogger(StudentPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -93,6 +95,7 @@ public class StudentPerCourseDao {
         return list;
 
     }
+//    enroll to course (Student Menu)
 
     public static void enrollToCourse(int student_id) throws ParseException {
         Scanner sc = new Scanner(System.in);
@@ -136,7 +139,7 @@ public class StudentPerCourseDao {
                         System.err.println("YOU HAVE BEEN ENROLLED TO  " + title + "!" + "\n");
                         enroll_id = getEnrollId(student_id);
                         StudentDao.insertEnrollId(enroll_id);
-                        Home.subMenu();
+                        StudentMenu.subMenu();
 
                     } catch (SQLException ex) {
                         Logger.getLogger(StudentPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -156,13 +159,14 @@ public class StudentPerCourseDao {
 
                     break;
                 case "no":
-                    Home.subMenu();
+                    StudentMenu.subMenu();
                     break;
 
             }
         }
     }
 
+//    create student per course (Headmaster Menu)
     public static void createStudentPerCourse() throws ParseException {
         Scanner sc = new Scanner(System.in);
         System.out.println("1.Students not enrolled to a course" + "\n" + "2.Students already enrolled to one course" + "\n"
@@ -236,11 +240,11 @@ public class StudentPerCourseDao {
                                             Logger.getLogger(StudentPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
                                         }
                                     }
-                                    Home.headmasterMenu();
+                                    HeadmasterMenu.headmasterMenu();
                                     break;
                                 case "no": {
                                     try {
-                                        Home.headmasterMenu();
+                                        HeadmasterMenu.headmasterMenu();
                                     } catch (ParseException ex) {
                                         Logger.getLogger(StudentPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
                                     }
@@ -254,10 +258,10 @@ public class StudentPerCourseDao {
                             System.out.println("PLEASE TYPE THE NAME OF THE STUDENT");
                             StudentDao.checkIfStudentExists();
                             HeadmasterDao.setSecondcourse(enroll_id);
-                            Home.headmasterMenu();
+                            HeadmasterMenu.headmasterMenu();
                             break;
                         case 3:
-                            Home.headmasterMenu();
+                            HeadmasterMenu.headmasterMenu();
                             break;
                     }
 
@@ -271,6 +275,7 @@ public class StudentPerCourseDao {
         } while (sc.hasNext());
 
     }
+//    From student_id get enroll_id
 
     public static int getEnrollId(int student_id) {
 
@@ -301,6 +306,7 @@ public class StudentPerCourseDao {
         }
         return enroll_id;
     }
+// securing that a student will not be enrolled to more than two courses
 
     public static StudentPerCourse getStudentPerCourse(int enroll_id) throws ParseException {
         Connection con = DBUtils.getConnection();
@@ -327,14 +333,14 @@ public class StudentPerCourseDao {
                     System.err.println("You can enroll to one more course");
                     System.out.println("\n");
                     setSecondcourse(enroll_id);
-                    Home.subMenu();
+                    StudentMenu.subMenu();
 
                 } else {
                     System.err.println("You already have been enrolled to two courses! For more come next year!");
                     System.err.println("Goodbye");
                     showCourseEnrolled(student_id);
                     System.out.println("\n");
-                    Home.subMenu();
+                    StudentMenu.subMenu();
                     break;
                 }
 
@@ -358,6 +364,7 @@ public class StudentPerCourseDao {
         return spcr;
 
     }
+//    showi courses per student
 
     public static String showCourseEnrolled(int student_id) {
 
@@ -391,6 +398,7 @@ public class StudentPerCourseDao {
         }
         return "";
     }
+//    set second course (update field) for Student Menu
 
     public static void setSecondcourse(int enroll_id) throws ParseException {
         Scanner sc = new Scanner(System.in);
@@ -438,8 +446,9 @@ public class StudentPerCourseDao {
             System.err.println("SUCCESS! YOU HAVE BEEN ENROLLED TO " + title);
             System.out.println("\n");
         }
-        Home.subMenu();
+        StudentMenu.subMenu();
     }
+//get course schedule (Student Menu)
 
     public static void studentSchedule() throws ParseException {
         System.out.println("For which of your courses do you want to see the schedule?");
@@ -471,7 +480,7 @@ public class StudentPerCourseDao {
         } catch (SQLException ex) {
 //            Logger.getLogger(StudentPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("THERE IS NO SCHEDULE YET!");
-            Home.subMenu();
+            StudentMenu.subMenu();
 
         } finally {
 
@@ -488,9 +497,10 @@ public class StudentPerCourseDao {
         }
 
         if (bool) {
-            Home.subMenu();
+            StudentMenu.subMenu();
         }
     }
+//    show students per course
 
     public static void showStudentsByCourseId(int course_id) throws ParseException {
         boolean bool = true;
@@ -498,7 +508,7 @@ public class StudentPerCourseDao {
         PreparedStatement pst = null;
         String sql = "select student.student_id, first_name,last_name from student inner join student_per_course on "
                 + "student_per_course.student_id=student.student_id\n"
-                + "where student_per_course.course_id=" + course_id+" or student_per_course.secondcourse_id="+course_id;
+                + "where student_per_course.course_id=" + course_id + " or student_per_course.secondcourse_id=" + course_id;
         System.err.println("STUDENTS WHO ARE ENROLLED IN THIS COURSE:" + "\n");
         try {
             pst = con.prepareStatement(sql);
@@ -530,10 +540,11 @@ public class StudentPerCourseDao {
         }
         if (bool) {
             System.err.println("THERE ARE NO STUDENTS YET!");
-            Home.headmasterMenu();
+            HeadmasterMenu.headmasterMenu();
         }
 
     }
+//    avoid deleting wrong student
 
     public static void checkStudentPerCourseExists(int course_id, int student_id) throws ParseException {
         boolean bool = true;
@@ -566,10 +577,11 @@ public class StudentPerCourseDao {
         }
         if (bool) {
             System.err.println("THIS STUDENT IS NOT ENROLLED IN THIS COURSE!");
-            Home.headmasterMenu();
+            HeadmasterMenu.headmasterMenu();
         }
 
     }
+//    delete (first course) or update to null second course
 
     public static void deleteStudentPerCourse() throws ParseException {
         Scanner sc = new Scanner(System.in);
@@ -594,13 +606,13 @@ public class StudentPerCourseDao {
                 PreparedStatement pst2 = null;
                 String sql = "update student_per_course set course_id=null where course_id=" + course_id
                         + " and student_id=" + student_id;
-                String sql1="update student_per_course set secondcourse_id=null where secondcourse_id=" + course_id
+                String sql1 = "update student_per_course set secondcourse_id=null where secondcourse_id=" + course_id
                         + " and student_id=" + student_id;
                 boolean result = false;
                 try {
                     con.setAutoCommit(false);
                     pst = con.prepareStatement(sql);
-                    pst2=con.prepareStatement(sql1);
+                    pst2 = con.prepareStatement(sql1);
                     pst.execute();
                     pst2.execute();
                     con.commit();
@@ -624,11 +636,11 @@ public class StudentPerCourseDao {
                 if (result) {
                     System.err.println("STUDENT " + StudentDao.first_name + " " + StudentDao.last_name + " HAS BEEN DELETED FROM " + CourseDao.title);
                 }
-                Home.headmasterMenu();
+                HeadmasterMenu.headmasterMenu();
                 break;
             case "no": {
                 try {
-                    Home.headmasterMenu();
+                    HeadmasterMenu.headmasterMenu();
                 } catch (ParseException ex) {
                     Logger.getLogger(StudentPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -637,7 +649,54 @@ public class StudentPerCourseDao {
             break;
         }
     }
+//    showing assignment's grade (Student Menu)
 
+    public static String showMarksOfAssignment(int assignment_id, int student_id) {
+        Connection con = DBUtils.getConnection();
+        PreparedStatement pst = null;
+        boolean bool = true;
+        String sql = "select title,oral_mark,total_mark from (assignment) inner join assignment_per_student \n"
+                + "on assignment.assignment_id=assignment_per_student.assignment_id  "
+                + "where assignment_per_student.assignment_id=" + assignment_id
+                + " and assignment_per_student.student_id=" + student_id;
+        try {
+            pst = con.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery(sql);
+            while (rs.next()) {
+                String title=rs.getString(1);
+                int oral_mark = rs.getInt(2);
+                int total_mark = rs.getInt(3);
+                bool = rs.wasNull();
+                if (bool){
+                    System.out.println("ORAL MARK = null"+"\n"+"TOTAL MARK = null");
+                }else{
+                     System.out.println("ORAL MARK = " + oral_mark + "\n" + "TOTAL MARK =" + total_mark + "\n");
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+
+            try {
+                pst.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(StudentPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(StudentPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (bool) {
+            System.err.println("THERE ARE NO MARKED ASSIGNMENTS YET!");
+            try {
+                StudentMenu.subMenu();
+            } catch (ParseException ex) {
+                Logger.getLogger(AssignmentsPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return "";
+
+    }
 }
-
-

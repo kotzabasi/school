@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import menus.HeadmasterMenu;
 import menus.Home;
 import model.Course;
 import model.Schedule;
@@ -171,7 +172,7 @@ public class ScheduleDao {
                 break;
             case "no": {
                 try {
-                    Home.headmasterMenu();
+                    HeadmasterMenu.headmasterMenu();
                 } catch (ParseException ex) {
                     Logger.getLogger(StudentPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -290,7 +291,7 @@ public class ScheduleDao {
             }
             System.err.println("SCHEDULE HAS BEEN CREATED!");
             System.out.println("\n");
-            Home.headmasterMenu();
+            HeadmasterMenu.headmasterMenu();
         }
 
     }
@@ -444,7 +445,7 @@ public class ScheduleDao {
                             String answer = Utils.answerYesOrNo(sc.nextLine());
                             switch (answer) {
                                 case "yes":
-                                    Home.headmasterMenu();
+                                    HeadmasterMenu.headmasterMenu();
                                     break;
                                 case "no":
                                     updateSchedule();
@@ -464,7 +465,7 @@ public class ScheduleDao {
                            String answer2 = Utils.answerYesOrNo(sc.nextLine());
                             switch (answer2) {
                                 case "yes":
-                                    Home.headmasterMenu();
+                                    HeadmasterMenu.headmasterMenu();
                                     break;
                                 case "no":
                                     updateSchedule();
@@ -474,7 +475,7 @@ public class ScheduleDao {
                             break;
 
                         case 5:
-                            Home.headmasterMenu();
+                            HeadmasterMenu.headmasterMenu();
                             break;
 
                     }
@@ -554,7 +555,7 @@ public class ScheduleDao {
                     insertScheduleRow();
                     break;
                 case "no":
-                    Home.headmasterMenu();
+                    HeadmasterMenu.headmasterMenu();
                     break;
             }
             

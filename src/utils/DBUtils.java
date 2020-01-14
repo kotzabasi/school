@@ -16,8 +16,10 @@ import java.util.logging.Logger;
  * @author liana
  */
 public class DBUtils {
-    public static String USERNAME = "root";
-    public static String PASS = "Kk745353!";
+//    please insert username and password
+    
+    public static String USERNAME = "";
+    public static String PASS = "";
     public static final String MYSQLURL = "jdbc:mysql://localhost/individual?useUnicode="
             + "true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
             + "&useUnicode=true"

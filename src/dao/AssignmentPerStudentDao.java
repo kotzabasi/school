@@ -15,7 +15,9 @@ import java.text.ParseException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import menus.HeadmasterMenu;
 import menus.Home;
+import menus.StudentMenu;
 import model.AssignmentPerStudent;
 import utils.DBUtils;
 
@@ -61,6 +63,7 @@ public class AssignmentPerStudentDao {
     }
 
     public static void getAssignmentPerStudent(int student_id) {
+        int assingment_id=AssignmentDao.assignment_id;
         Connection con = DBUtils.getConnection();
         PreparedStatement pst = null;
         boolean bool = true;
@@ -78,10 +81,10 @@ public class AssignmentPerStudentDao {
                 Timestamp expiration_date = rs.getTimestamp("expiration_date");
                 Utils.getDaysBetweenDates(expiration_date);
                 boolean submitted = rs.getBoolean("submitted");
-                System.out.println("\n");
+                int assignment_id=AssignmentDao.fetchAssignmentId(title);
                 System.out.println("ASSIGNMENT: " + title + "\n" + "SUBMISSION DATE: " + Utils.subtractTime(submission_date) + "\n"
                         + "EXPIRATION DATE: " + Utils.subtractTime(expiration_date) + "\n" + "SUBMITTED: "
-                        + Utils.sumbitted(submitted) + "\n");
+                        + Utils.sumbitted(submitted)+"\n");  
                 bool = rs.wasNull();
 
             }
@@ -103,7 +106,7 @@ public class AssignmentPerStudentDao {
         if (bool) {
             System.err.println("THERE ARE NO ASSIGNMENTS YET!");
             try {
-                Home.subMenu();
+                StudentMenu.subMenu();
             } catch (ParseException ex) {
                 Logger.getLogger(AssignmentsPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -181,7 +184,7 @@ public class AssignmentPerStudentDao {
             AssignmentPerStudentDao.assignAssignmentToStudent(assignment_id, student_id);
         } else {
             try {
-                Home.headmasterMenu();
+                HeadmasterMenu.headmasterMenu();
             } catch (ParseException ex) {
                 Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -283,7 +286,7 @@ public class AssignmentPerStudentDao {
 
                 } catch (SQLException ex) {
                     Logger.getLogger(AssignmentPerStudentDao.class.getName()).log(Level.SEVERE, null, ex);
-                    Home.subMenu();
+                    StudentMenu.subMenu();
 
                 } finally {
                     try {
@@ -302,7 +305,7 @@ public class AssignmentPerStudentDao {
                 }
                 break;
             case "no":
-                Home.subMenu();
+                StudentMenu.subMenu();
                 break;
         }
     }

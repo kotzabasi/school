@@ -16,7 +16,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import menus.AdminMenu;
+import menus.HeadmasterMenu;
 import menus.Home;
+import menus.StudentMenu;
+import menus.TrainerMenu;
 import model.User;
 import org.omg.PortableServer.IdAssignmentPolicyValue;
 import utils.DBUtils;
@@ -136,17 +140,17 @@ public class UserDao {
                 user = new User(student_id, trainer_id, role,password);
                 BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), user.getPassword());
                 if (user.getRole().equalsIgnoreCase("student")) {
-                    Home.studentMenu();
+                    StudentMenu.studentMenu();
                 } else if (user.getRole().equalsIgnoreCase("trainer")) {
-                    Home.trainerMenu();
+                    TrainerMenu.trainerMenu();
                 } else if (user.getRole().equalsIgnoreCase("admin")) {
-                    Home.adminMenu();
+                    AdminMenu.adminMenu();
                 } else if (user.getRole().equalsIgnoreCase("admin")) {
-                    Home.trainerMenu();
+                    TrainerMenu.trainerMenu();
                 } else {
 
                     try {
-                        Home.headmasterMenu();
+                        HeadmasterMenu.headmasterMenu();
                     } catch (ParseException ex) {
                         Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -178,41 +182,5 @@ public class UserDao {
 
     }
     
-// I DID'T USE IT - NO SETTING PASSWORD MENU FOR USER - IT IS NOT REQUIRED FROM THE ASSIGNMENT
-//
-//    public static int findUserId(String username) {
-//        Connection con = DBUtils.getConnection();
-//        PreparedStatement pst = null;
-//        String sql = "SELECT user_id FROM user WHERE username='" + username + "'";
-//        try {
-//            pst = con.prepareStatement(sql);
-//            ResultSet rs = pst.executeQuery(sql);
-//            while (rs.next()) {
-//
-//                user_id = rs.getInt("user_id");
-//                System.out.println("USER ID " + user_id);
-//            }
-//
-//        } catch (SQLException ex) {
-//            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
-//        } finally {
-//
-//            try {
-//                pst.close();
-//            } catch (SQLException ex) {
-//                Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//            try {
-//                con.close();
-//            } catch (SQLException ex) {
-//                Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//        return user_id;
-//    }
-//
-//    public static void resetPassToDefault() {
-//
-//    }
-    
+
 }

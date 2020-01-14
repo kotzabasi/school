@@ -24,27 +24,6 @@ import java.util.concurrent.TimeUnit;
  */
 public class Utils {
 
-//    public static List<Date> getDatesBetweenUsingJava7(
-//            Date startDate, Date endDate) {
-//        List<Date> datesInRange = new ArrayList<>();
-//        Calendar calendar = new GregorianCalendar();
-//        calendar.setTime(startDate);
-//
-//        Calendar endCalendar = new GregorianCalendar();
-//        endCalendar.setTime(endDate);
-//
-//        while (calendar.before(endCalendar)) {
-//            Date result = calendar.getTime();
-//            datesInRange.add(result);
-//            calendar.add(Calendar.DATE, 1);
-//        }
-//        for (Date date : datesInRange) {
-//            System.out.println(date);
-//
-//        }
-//        return datesInRange;
-//    }
-
     public static int onlyInteger() {
 
         Scanner sc = new Scanner(System.in);
@@ -68,19 +47,6 @@ public class Utils {
 
     }
 
-//    public static String notNull(String s) {
-//        Scanner sc = new Scanner(System.in);
-//        while (s.isEmpty() || s.matches(".*\\d.*")) {
-//            System.err.println("Null values not allowed!"
-//                    + "\n" + "Please try again:" + "\n");
-//            s = sc.nextLine();
-//
-//        }
-//
-//        return s;
-//    }
-
-//    inserting a range of dates to schedule table
     
     public static List<String> getDates(
             Date startDate, Date endDate) {

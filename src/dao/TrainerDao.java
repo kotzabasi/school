@@ -13,7 +13,9 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import menus.HeadmasterMenu;
 import menus.Home;
+import menus.TrainerMenu;
 import model.Student;
 import utils.DBUtils;
 import model.Trainer;
@@ -497,18 +499,18 @@ public class TrainerDao {
                     switch (fieldUpdate) {
                         case 1:
                             updateTrainerFirstName(trainer);
-                            Home.headmasterMenu();
+                            HeadmasterMenu.headmasterMenu();
                             break;
                         case 2:
                             updateTrainerLastName(trainer);
-                            Home.headmasterMenu();
+                            HeadmasterMenu.headmasterMenu();
                             break;
                         case 3:
                             updateTrainerSubject(trainer);
-                            Home.headmasterMenu();
+                            HeadmasterMenu.headmasterMenu();
                             break;
                         case 4:
-                            Home.headmasterMenu();
+                            HeadmasterMenu.headmasterMenu();
 
                     }
                 }
@@ -682,7 +684,7 @@ public class TrainerDao {
             AssignmentPerStudentDao.assignAssignmentToStudent(assignment_id, student_id);
         } else {
             try {
-                Home.headmasterMenu();
+                TrainerMenu.trainerSubmenu();
             } catch (ParseException ex) {
                 Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
             }

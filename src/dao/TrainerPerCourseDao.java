@@ -15,7 +15,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import menus.HeadmasterMenu;
 import menus.Home;
+import menus.TrainerMenu;
 import model.Trainer;
 import model.TrainerPerCourse;
 import utils.DBUtils;
@@ -26,6 +28,7 @@ import utils.DBUtils;
  */
 public class TrainerPerCourseDao {
 
+//    List of trainers - select course first
     public static ArrayList<Trainer> getTrainersPerCourse() throws ParseException {
         CourseDao.getAllCourses();
         System.out.println("For which course you want to see a list of trainers?");
@@ -71,10 +74,10 @@ public class TrainerPerCourseDao {
                 Logger.getLogger(TrainerPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-         if (list.isEmpty()) {
+        if (list.isEmpty()) {
             System.out.println("THERE ARE NO TRAINERS IN THIS COURSE YET!" + "\n");
             try {
-                Home.headmasterMenu();
+                HeadmasterMenu.headmasterMenu();
             } catch (ParseException ex) {
                 Logger.getLogger(StudentPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -121,7 +124,9 @@ public class TrainerPerCourseDao {
                     System.err.println("You have assigned " + firstname + " " + lastname + " to " + title);
 
                 } catch (SQLException ex) {
-                    Logger.getLogger(TrainerPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
+                    System.err.println("THIS IS A DUPLICATE ENTRY!");
+                    System.err.println("PLEASE TRY AGAIN:");
+                    createTrainerPerCourse();
                 } finally {
 
                     try {
@@ -138,7 +143,7 @@ public class TrainerPerCourseDao {
                 break;
             case "no": {
                 try {
-                    Home.headmasterMenu();
+                    HeadmasterMenu.headmasterMenu();
                 } catch (ParseException ex) {
                     Logger.getLogger(TrainerPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -194,7 +199,7 @@ public class TrainerPerCourseDao {
                 break;
             case "no": {
                 try {
-                    Home.headmasterMenu();
+                    HeadmasterMenu.headmasterMenu();
                 } catch (ParseException ex) {
                     Logger.getLogger(TrainerPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -202,6 +207,7 @@ public class TrainerPerCourseDao {
             break;
         }
     }
+//show courses per trainer
 
     public static String showCoursePerTrainer(int trainer_id) {
         Connection con = DBUtils.getConnection();
@@ -212,16 +218,15 @@ public class TrainerPerCourseDao {
         try {
             pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery(sql);
-           
+
             while (rs.next()) {
                 String title = rs.getString(1);
                 System.err.println("COURSE: " + title);
             }
-            
-                
+
         } catch (SQLException ex) {
             Logger.getLogger(TrainerPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
-            
+
         } finally {
 
             try {
@@ -238,12 +243,13 @@ public class TrainerPerCourseDao {
         return "";
     }
 
+//    see submitted assignments  (Trainer Menu)
     public static void seeStudentsSubmittedAssignmentsPerCourse() throws ParseException {
         Scanner sc = new Scanner(System.in);
         System.out.println("CHOOSE COURSE");
         CourseDao.checkIfCourseExists();
         Connection con = DBUtils.getConnection();
-        boolean bool=true;
+        boolean bool = true;
         PreparedStatement pst = null;
         String sql = "select title as ASSIGNMENT, first_name,last_name from (assignment,student) "
                 + "inner join assignment_per_student on "
@@ -261,7 +267,7 @@ public class TrainerPerCourseDao {
                 String last_name = rs.getString(3);
                 System.out.println("ASSIGNMENT: " + title + "\n" + "FIRST NAME: " + first_name
                         + "\n" + "LAST NAME: " + last_name + "\n");
-                bool=rs.wasNull();
+                bool = rs.wasNull();
             }
         } catch (SQLException ex) {
             Logger.getLogger(TrainerPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -278,16 +284,17 @@ public class TrainerPerCourseDao {
                 Logger.getLogger(TrainerPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        if(bool){
+        if (bool) {
             System.out.println("THERE ARE NO SUBMITTED ASSIGNMENTS!!");
-            Home.trainerSubmenu();
-            
+            TrainerMenu.trainerSubmenu();
+
         }
 
     }
+//  for Trainer Menu
 
     public static void markAssignments() throws ParseException {
-        Scanner sc = new Scanner (System.in);
+        Scanner sc = new Scanner(System.in);
         seeStudentsSubmittedAssignmentsPerCourse();
         System.out.println("CHOOSE STUDENT: ");
         StudentDao.checkIfStudentExists();
@@ -296,29 +303,29 @@ public class TrainerPerCourseDao {
         fetchOralAndTotalMark();
         System.out.println("WOULD YOU LIKE TO SET ORAL MARK,TOTAL MARK OR BOTH?");
         System.out.println("PLEASE TYPE ORAL,TOTAL OR BOTH");
-        String answer=Utils.notNull(sc.nextLine().toLowerCase());
-        while(!answer.equalsIgnoreCase("total") && !answer.equalsIgnoreCase("oral")
-        && !answer.equalsIgnoreCase("both")){
+        String answer = Utils.notNull(sc.nextLine().toLowerCase());
+        while (!answer.equalsIgnoreCase("total") && !answer.equalsIgnoreCase("oral")
+                && !answer.equalsIgnoreCase("both")) {
             System.out.println("Please type ORAL,TOTAL or BOTH");
-            answer=sc.nextLine().toLowerCase();
+            answer = sc.nextLine().toLowerCase();
         }
-        switch(answer){
+        switch (answer) {
             case "oral":
                 AssignmentPerStudentDao.updateOralMark();
-                Home.trainerSubmenu();
+                TrainerMenu.trainerSubmenu();
                 break;
-                case "total":
-                    AssignmentPerStudentDao.updateTotalMark();
-                    Home.trainerSubmenu();
-                    break;
-                case "both":
-                    System.out.println("ORAL MARK:");
-                    AssignmentPerStudentDao.updateOralMark();
-                    System.out.println("TOTAL MARK: ");
-                    AssignmentPerStudentDao.updateTotalMark();
-                    Home.trainerSubmenu();
-                    
-                    break;
+            case "total":
+                AssignmentPerStudentDao.updateTotalMark();
+                TrainerMenu.trainerSubmenu();
+                break;
+            case "both":
+                System.out.println("ORAL MARK:");
+                AssignmentPerStudentDao.updateOralMark();
+                System.out.println("TOTAL MARK: ");
+                AssignmentPerStudentDao.updateTotalMark();
+                TrainerMenu.trainerSubmenu();
+
+                break;
         }
     }
 
@@ -326,6 +333,7 @@ public class TrainerPerCourseDao {
 
         Connection con = DBUtils.getConnection();
         PreparedStatement pst = null;
+        boolean bool = true;
         String sql = "SELECT oral_mark,total_mark from assignment_per_student where assignment_id="
                 + AssignmentDao.assignment_id + " and student_id=" + StudentDao.student_id;
         try {
@@ -334,7 +342,12 @@ public class TrainerPerCourseDao {
             while (rs.next()) {
                 int oral_mark = rs.getInt(1);
                 int total_mark = rs.getInt(2);
-                System.out.println("ORAL MARK: " + oral_mark + "\n" + "TOTAL MARK:" + total_mark + "\n");
+                bool = rs.wasNull();
+                if (bool) {
+                    System.out.println("ORAL MARK = null" + "\n" + "TOTAL MARK = null");
+                } else {
+                    System.out.println("ORAL MARK = null " + oral_mark + "\n" + "TOTAL MARK =" + total_mark + "\n");
+                }
             }
         } catch (SQLException ex) {
             Logger.getLogger(TrainerPerCourseDao.class.getName()).log(Level.SEVERE, null, ex);

@@ -15,6 +15,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import menus.HeadmasterMenu;
 import menus.Home;
 import model.Student;
 import model.User;
@@ -323,7 +324,7 @@ public class StudentDao {
                     System.err.println("STUDENT HAS BEEN DELETED");
                     break;
                 case "no":
-                    Home.headmasterMenu();
+                    HeadmasterMenu.headmasterMenu();
             }
         } catch (SQLException ex) {
             Logger.getLogger(StudentDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -540,22 +541,22 @@ public class StudentDao {
                     switch (fieldUpdate) {
                         case 1:
                             updateStudentFirstName(student);
-                            Home.headmasterMenu();
+                            HeadmasterMenu.headmasterMenu();
                             break;
                         case 2:
                             updateStudentLastName(student);
-                            Home.headmasterMenu();
+                            HeadmasterMenu.headmasterMenu();
                             break;
                         case 3:
                             updateStudentTuitionFees(student);
-                            Home.headmasterMenu();
+                            HeadmasterMenu.headmasterMenu();
                             break;
                         case 4:
                             updateStudentDateOfBirth(student);
-                            Home.headmasterMenu();
+                            HeadmasterMenu.headmasterMenu();
                             break;
                         case 5:
-                            Home.headmasterMenu();
+                            HeadmasterMenu.headmasterMenu();
                     }
 
                 }

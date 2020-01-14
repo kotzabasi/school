@@ -20,6 +20,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import menus.HeadmasterMenu;
 import menus.Home;
 import model.Course;
 import utils.DBUtils;
@@ -382,7 +383,7 @@ public class CourseDao {
                     result = true;
                     break;
                 case "no":
-                    Home.headmasterMenu();
+                    HeadmasterMenu.headmasterMenu();
                     break;
             }
         } catch (SQLException ex) {
@@ -717,26 +718,26 @@ public class CourseDao {
                     switch (fieldUpdate) {
                         case 1:
                             updateCourseTitle(course_id);
-                            Home.headmasterMenu();
+                            HeadmasterMenu.headmasterMenu();
                             break;
                         case 2:
                             updateCourseStartDate(course_id);
-                            Home.headmasterMenu();
+                            HeadmasterMenu.headmasterMenu();
                             break;
                         case 3:
                             updateCourseEndDate(course_id);
-                            Home.headmasterMenu();
+                            HeadmasterMenu.headmasterMenu();
                             break;
                         case 4:
                             updateCourseStream(course_id);
-                            Home.headmasterMenu();
+                            HeadmasterMenu.headmasterMenu();
                             break;
                         case 5:
                             updateCourseType(course_id);
-                            Home.headmasterMenu();
+                            HeadmasterMenu.headmasterMenu();
                             break;
                         case 6:
-                            Home.headmasterMenu();
+                            HeadmasterMenu.headmasterMenu();
 
                     }
 

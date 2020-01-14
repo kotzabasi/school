@@ -6,7 +6,8 @@
 package school;
 
 
-import java.text.ParseException;
+
+import java.text.ParseException;;
 import menus.Home;
 
 
@@ -21,9 +22,9 @@ public class School {
      * @throws java.text.ParseException
      */
     public static void main(String[] args) throws ParseException {
-      Home.userLogin();
-             
+
+    Home.userLogin();
 
     }
-
 }
+
